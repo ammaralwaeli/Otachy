@@ -1,0 +1,46 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:toolbarStyle">@style/myToolbarStyle</item>
+        <item name="android:actionBarStyle">@style/myToolbarStyle</item>
+        <item name="toolbarStyle">@style/myToolbarStyle</item>
+        <item name="actionBarStyle">@style/myToolbarStyle</item>
+        <item name="android:textViewStyle">@style/myTextViewStyle</item>
+    </style>
+
+    <style name="myToolbarStyle" parent="android:Widget.Toolbar">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:actionMenuTextColor">@android:color/white</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_top_btn_white</item>
+        <item name="background">@color/colorPrimary</item>
+        <item name="actionMenuTextColor">@android:color/white</item>
+        <item name="homeAsUpIndicator">@drawable/ic_top_btn_white</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="myTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+
+    <style name="toolbarTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:textColor">@android:color/white</item>
+
+        <item name="android:textSize">@dimen/toolbar_tile_size</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+</resources>

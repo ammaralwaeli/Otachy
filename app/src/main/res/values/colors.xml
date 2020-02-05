@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#127992</color>
+    <color name="colorPrimaryDark">@color/colorPrimary</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <color name="lightRed">#DE6865</color>
+    <color name="darkRed">#964745</color>
+
+    <color name="lightTurquoise">#74C6D9</color>
+    <color name="darkTurquoise">#117891</color>
+
+    <color name="lightGray">#CCCCCC</color>
+
+    <color name="otchyBg">#EBC942</color>
+    <color name="rachitaBg">#B3149D97</color>
+    <color name="soon1Bg">#B3DE6865</color>
+    <color name="soon2Bg">#B39C95DC</color>
+</resources>

@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_login_turquoise_gradient"
+    tools:context=".ui.activity.RegisterActivity">
+
+    <LinearLayout
+        android:id="@+id/contentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="42dp"
+        android:layout_marginEnd="42dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:animateLayoutChanges="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/bahij_the_sans_arabic_bold"
+            android:text="@string/register"
+            android:textColor="@android:color/white"
+            android:textSize="27sp" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="18dp"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="8dp">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/register_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:padding="18dp"
+                android:visibility="visible">
+
+                <com.tiper.MaterialSpinner
+                    android:id="@+id/governorate"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:focusableInTouchMode="false"
+                    android:fontFamily="@font/bahij_the_sans_arabic_plain"
+                    android:gravity="center"
+                    android:hint="@string/gov"
+                    android:textColorHint="@color/colorPrimary"
+                    app:layout_constraintBottom_toTopOf="@+id/city"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/phoneNumber" />
+
+                <EditText
+                    android:id="@+id/username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_outline_gradient_btn"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:fontFamily="@font/bahij_the_sans_arabic_plain"
+                    android:gravity="center"
+                    android:hint="@string/username"
+                    android:inputType="text"
+                    android:padding="12dp"
+                    android:textColorHint="@color/colorPrimary"
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toTopOf="@+id/phoneNumber"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/phoneNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_outline_gradient_btn"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:fontFamily="@font/bahij_the_sans_arabic_plain"
+                    android:gravity="center"
+                    android:hint="@string/phone_number"
+                    android:inputType="phone"
+                    android:nextFocusLeft="@id/buildEditText"
+                    android:nextFocusRight="@id/buildEditText"
+                    android:nextFocusUp="@id/buildEditText"
+                    android:nextFocusDown="@id/buildEditText"
+                    android:padding="12dp"
+                    android:textColorHint="@color/colorPrimary"
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toTopOf="@+id/governorate"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/username" />
+
+                <EditText
+                    android:id="@+id/pass"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_outline_gradient_btn"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:fontFamily="@font/bahij_the_sans_arabic_plain"
+                    android:gravity="center"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
+                    android:padding="12dp"
+                    android:textColorHint="@color/colorPrimary"
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/city" />
+
+                <EditText
+                    android:id="@+id/city"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_outline_gradient_btn"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:fontFamily="@font/bahij_the_sans_arabic_plain"
+                    android:gravity="center"
+                    android:hint="@string/city"
+                    android:inputType="text"
+                    android:padding="12dp"
+                    android:textColorHint="@color/colorPrimary"
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toTopOf="@+id/pass"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/governorate" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/verification_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:padding="18dp"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/verification_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/bg_outline_gradient_btn"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:fontFamily="@font/bahij_the_sans_arabic_plain"
+                    android:gravity="center"
+                    android:hint="@string/enterVerifyCode"
+                    android:inputType="number"
+                    android:padding="12dp"
+                    android:textColorHint="@color/colorPrimary"
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/registerButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="-2dp"
+                android:layout_marginEnd="18dp"
+                android:background="@drawable/bg_btn_red_radient"
+                android:elevation="1dp"
+                android:fontFamily="@font/bahij_the_sans_arabic_extra_bold"
+                android:onClick="register"
+                android:text="@string/register"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/verifyButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="-2dp"
+                android:layout_marginEnd="18dp"
+                android:background="@drawable/bg_btn_red_radient"
+                android:elevation="1dp"
+                android:fontFamily="@font/bahij_the_sans_arabic_extra_bold"
+                android:onClick="verify"
+                android:text="@string/verify"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+            <ProgressBar
+                android:id="@+id/progressIndicator"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center"
+                android:elevation="2dp"
+                android:indeterminate="true"
+                android:indeterminateTint="@android:color/white"
+                android:visibility="invisible" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

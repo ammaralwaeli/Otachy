@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="recyclerPadding">8dp</dimen>
+    <dimen name="toolbar_tile_size">18sp</dimen>
+    <dimen name="item_corner_radius">5dp</dimen>
+    <dimen name="item_home_height">80dp</dimen>
+    <dimen name="item_elevation">3dp</dimen>
+    <dimen name="small_icon_elevation">1dp</dimen>
+    <dimen name="item_height">65dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+</resources>
