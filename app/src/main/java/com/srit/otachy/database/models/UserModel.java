@@ -13,6 +13,9 @@ public class UserModel implements Serializable {
     private String username;
     private String mobileNo;
     private String role;
+    private String Government;
+
+
     private static UserModel instance;
 
     public static UserModel getInstance(String access) {
@@ -31,13 +34,12 @@ public class UserModel implements Serializable {
 
     }
 
-
-    public UserModel(String username, String mobileNo, String role) {
+    public UserModel(String username, String mobileNo, String role, String government) {
         this.username = username;
         this.mobileNo = mobileNo;
         this.role = role;
+        Government = government;
     }
-
 
     public String getUsername() {
         return username;
@@ -51,6 +53,9 @@ public class UserModel implements Serializable {
         return role;
     }
 
+    public String getGovernment() {
+        return Government;
+    }
 
     @NotNull
     @Override
@@ -59,6 +64,7 @@ public class UserModel implements Serializable {
                 "username='" + username + '\'' +
                 ", mobileNo='" + mobileNo + '\'' +
                 ", role='" + role + '\'' +
+                ", Government='" + Government + '\'' +
                 '}';
     }
 }

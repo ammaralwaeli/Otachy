@@ -23,6 +23,7 @@ import com.srit.otachy.R
 import com.srit.otachy.database.api.BackendCallBack
 import com.srit.otachy.database.api.DataService
 import com.srit.otachy.database.models.LoginModel
+import com.srit.otachy.database.models.UserModel
 import com.srit.otachy.databinding.ActivityLoginBinding
 import com.srit.otachy.helpers.BackendHelper
 import com.srit.otachy.helpers.SharedPrefHelper
@@ -79,7 +80,8 @@ class LoginActivity : AppCompatActivity(){
                 override fun onSuccess(result: JsonObject?) {
                     val access=result?.get("jwt")?.asString
                     SharedPrefHelper.getInstance().accessToken=access
-                    //Toast.makeText(this@LoginActivity,UserModel.getInstance(access).toString(),Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@LoginActivity,
+                        UserModel.getInstance(access).toString(),Toast.LENGTH_LONG).show()
                     HomeActivity.newInstance(this@LoginActivity)
                 }
 

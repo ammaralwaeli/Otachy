@@ -27,7 +27,7 @@ interface DataService{
     //@HTTP(method = "GET", path = "vendor/getVendors", hasBody = true)
     @GET("vendor/getVendors")
     fun getVendors(
-        @Body  government:Governments
+        @Query("government") government:String
     ): Call<List<VendorModel>>
 
 

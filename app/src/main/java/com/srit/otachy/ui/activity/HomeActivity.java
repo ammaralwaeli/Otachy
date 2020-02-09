@@ -1,11 +1,15 @@
 package com.srit.otachy.ui.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -19,6 +23,7 @@ import com.srit.otachy.database.models.VendorModel;
 import com.srit.otachy.database.models.VerificateionModel;
 import com.srit.otachy.databinding.ActivityHomeBinding;
 import com.srit.otachy.helpers.BackendHelper;
+import com.srit.otachy.helpers.SharedPrefHelper;
 import com.srit.otachy.helpers.ViewExtensionsKt;
 
 import org.jetbrains.annotations.NotNull;
@@ -34,7 +39,7 @@ public class HomeActivity extends AppCompatActivity {
     VendorRecyclerAdapter adapter;
 
 
-    public static void newInstance(Context context){
+    public static void newInstance(Context context) {
         context.startActivity(new Intent(context, HomeActivity.class));
     }
 
@@ -42,24 +47,57 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home);
-
         loadVendors();
 
+        setSupportActionBar(binding.toolbar.toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(getString(R.string.home));
 
+
+
+
+
+        // SaveNote Action
+        binding.toolbar.toolbar.inflateMenu(R.menu.menu_home);
+        binding.toolbar.toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                if (item.getItemId() == R.id.shoppingCartMenuItem)
+                {
+                    // Do something
+                    Toast.makeText(getApplicationContext(), "Save", Toast.LENGTH_SHORT).show();
+                }
+                return true;
+            }
+        });
+
+
+        // Dismiss Action
+        binding.toolbar.toolbar.setNavigationIcon(R.drawable.ic_filter);
+        binding.toolbar.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // Do something
+                Toast.makeText(getApplicationContext(), "Dismiss", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
     private void loadVendors() {
-        DataService service = BackendHelper.INSTANCE.getRetrofit()
+        DataService service = BackendHelper.INSTANCE.getRetrofitWithAuth()
                 .create(DataService.class);
 
-        service.getVendors(new Governments("بغداد"))
+        String gov = UserModel.getInstance(SharedPrefHelper.getInstance().getAccessToken()).getGovernment();
+        service.getVendors(null)
                 .enqueue(new BackendCallBack<List<VendorModel>>() {
                     @Override
                     public void onSuccess(List<VendorModel> result) {
-                        adapter=new VendorRecyclerAdapter(result);
+                        adapter = new VendorRecyclerAdapter(result);
 
-                        ViewExtensionsKt.createGridLayout(binding.homeRecyclerView,adapter);
+                        ViewExtensionsKt.createGridLayout(binding.homeRecyclerView, adapter);
 
                     }
 
@@ -67,7 +105,7 @@ public class HomeActivity extends AppCompatActivity {
                     public void onError(int code, String msg) {
                         binding.progressIndicator2.setVisibility(View.GONE);
 
-                        binding.errorText.setText( msg + "  " + code);
+                        binding.errorText.setText(msg + "  " + code);
                     }
 
 

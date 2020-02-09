@@ -49,7 +49,7 @@ object BackendHelper {
                         val token =
                             SharedPrefHelper.getInstance().accessToken ?: return@Interceptor null
                         val newRequest = chain.request().newBuilder()
-                            .addHeader("token", token)
+                            .addHeader("Authorization", "bearer "+token)
                             .build()
                         chain.proceed(newRequest)
                     }
