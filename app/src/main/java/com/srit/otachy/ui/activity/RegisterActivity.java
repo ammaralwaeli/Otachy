@@ -1,15 +1,21 @@
 package com.srit.otachy.ui.activity;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import com.google.android.gms.auth.api.phone.SmsRetriever;
+import com.google.android.gms.auth.api.phone.SmsRetrieverClient;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.gson.JsonObject;
 import com.srit.otachy.R;
 import com.srit.otachy.database.api.BackendCallBack;
@@ -18,6 +24,7 @@ import com.srit.otachy.database.models.RegisterModel;
 import com.srit.otachy.database.models.VerificateionModel;
 import com.srit.otachy.databinding.ActivityRegisterBinding;
 import com.srit.otachy.helpers.BackendHelper;
+import com.srit.otachy.helpers.SmsBroadcastReceiver;
 import com.srit.otachy.helpers.ViewExtensionsKt;
 import com.tiper.MaterialSpinner;
 
@@ -25,6 +32,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import retrofit2.Call;
 
@@ -37,6 +46,90 @@ public class RegisterActivity extends AppCompatActivity {
     private boolean verificate;
     private int code;
 
+    private static final int REQ_USER_CONSENT = 200;
+    private static final String PHONE_NUMBER = "+14088984604";
+    SmsBroadcastReceiver smsBroadcastReceiver;
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQ_USER_CONSENT) {
+            if ((resultCode == RESULT_OK) && (data != null)) {
+                //That gives all message to us.
+                // We need to get the code from inside with regex
+                String message = data.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE);
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+
+                getOtpFromMessage(message);
+            }
+        }
+    }
+
+    private void getOtpFromMessage(String message) {
+        // This will match any 6 digit number in the message
+        Pattern pattern = Pattern.compile("(|^)\\d{6}");
+        Matcher matcher = pattern.matcher(message);
+        if (matcher.find()) {
+            //Toast.makeText(this,matcher.group(0),Toast.LENGTH_LONG).show();
+            String code=matcher.group(0);
+            Toast.makeText(this, code, Toast.LENGTH_LONG).show();
+            //binding.verificationCode.setText(code);
+            //verifyCode(Integer.decode(code));
+        }
+    }
+
+
+    private void startSmsUserConsent() {
+        SmsRetrieverClient client = SmsRetriever.getClient(this);
+        //We can add sender phone number or leave it blank
+        // I'm adding null here
+        client.startSmsUserConsent(PHONE_NUMBER).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(getApplicationContext(), "On Success", Toast.LENGTH_LONG).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getApplicationContext(), "On OnFailure", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void registerBroadcastReceiver() {
+        smsBroadcastReceiver = new SmsBroadcastReceiver();
+        smsBroadcastReceiver.smsBroadcastReceiverListener =
+                new SmsBroadcastReceiver.SmsBroadcastReceiverListener() {
+                    @Override
+                    public void onSuccess(Intent intent) {
+                        startActivityForResult(intent, REQ_USER_CONSENT);
+                    }
+                    @Override
+                    public void onFailure() {
+                    }
+                };
+        IntentFilter intentFilter = new IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION);
+        registerReceiver(smsBroadcastReceiver, intentFilter);
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        registerBroadcastReceiver();
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(smsBroadcastReceiver);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startSmsUserConsent();
+    }
+
+
+
     @Override
     public void onBackPressed() {
 
@@ -45,15 +138,24 @@ public class RegisterActivity extends AppCompatActivity {
             verificate = false;
             this.code = -1;
         }
+/*
+        Intent intent=new Intent(this,HomeActivity.class);
+        startActivity(intent);*/
+    }
+
+
+    public static void newInstance(Context context){
+        context.startActivity(new Intent(context, RegisterActivity.class));
     }
 
     private void showRegisterLayout() {
         binding.registerView.setVisibility(View.VISIBLE);
         binding.verificationView.setVisibility(View.GONE);
         binding.titleText.setText(R.string.register);
+        binding.registerButton.setText(R.string.register);
         binding.registerButton.setVisibility(View.VISIBLE);
         binding.verifyButton.setVisibility(View.GONE);
-
+        binding.haveAccount.setVisibility(View.VISIBLE);
     }
 
 
@@ -65,6 +167,7 @@ public class RegisterActivity extends AppCompatActivity {
         binding.titleText.setText(R.string.verifyAccount);
         binding.registerButton.setVisibility(View.GONE);
         binding.verifyButton.setVisibility(View.VISIBLE);
+        binding.haveAccount.setVisibility(View.GONE);
 
     }
 
@@ -76,6 +179,13 @@ public class RegisterActivity extends AppCompatActivity {
         verificate = false;
         code = -1;
         showRegisterLayout();
+        //startSmsUserConsent();
+        binding.newRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginActivity.Factory.newInstance(RegisterActivity.this);
+            }
+        });
         binding.governorate.setOnItemSelectedListener(new MaterialSpinner.
                 OnItemSelectedListener() {
             @Override
@@ -94,7 +204,11 @@ public class RegisterActivity extends AppCompatActivity {
                 materialSpinner.setHint(getString(R.string.gov));
             }
         });
+
+
+
     }
+
 
     private void loadGovs() {
         ArrayList<String> govs = new ArrayList<>();
@@ -138,7 +252,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Pair<Boolean, String> validataData() {
         int MINMUMPASSWORD = 6;
 
-        if (binding.username.getText().toString().equals("")) {
+        if (binding.name.getText().toString().equals("")) {
             return new Pair<>(false, getString(R.string.enterUsername));
         } else if (binding.phoneNumber.getText().toString().equals("")) {
             return new Pair<>(false, getString(R.string.enterPhone));
@@ -162,6 +276,7 @@ public class RegisterActivity extends AppCompatActivity {
         try {
 
             binding.progressIndicator.setVisibility(View.VISIBLE);
+            binding.registerButton.setText("");
             if (!verificate && this.code == -1) {
                 Pair<Boolean, String> pair = validataData();
                 if (!pair.first) {
@@ -174,7 +289,7 @@ public class RegisterActivity extends AppCompatActivity {
                 DataService service = BackendHelper.INSTANCE.getRetrofit().
                         create(DataService.class);
                 service.register(
-                        new RegisterModel(binding.username.getText().toString(),
+                        new RegisterModel(binding.name.getText().toString(),
                                 binding.pass.getText().toString(),
                                 binding.phoneNumber.getText().toString(),
                                 mGov,
@@ -183,8 +298,9 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(JsonObject result) {
                         showVerifyLayout();
+                        startSmsUserConsent();
                         verificate = true;
-                        code = result.get("CodeId").getAsInt();
+                        RegisterActivity.this.code = result.get("CodeId").getAsInt();
                         binding.progressIndicator.setVisibility(View.GONE);
                     }
 
@@ -195,6 +311,7 @@ public class RegisterActivity extends AppCompatActivity {
                             ViewExtensionsKt.showSnackBar(binding.contentLayout, getString(R.string.userIsExist),
                                     true);
                         }
+                        binding.registerButton.setText(getString(R.string.register));
                         /*Toast.makeText(RegisterActivity.this, msg,
                                 Toast.LENGTH_LONG).show();*/
                     }
@@ -207,6 +324,7 @@ public class RegisterActivity extends AppCompatActivity {
                         ViewExtensionsKt.showSnackBar(binding.contentLayout, getString(R.string.connectionError),
                                 true);
                         binding.progressIndicator.setVisibility(View.GONE);
+                        binding.registerButton.setText(getString(R.string.register));
 
                     }
                 });
@@ -228,22 +346,25 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void verifyCode(int code) {
 
+        binding.verifyButton.setText("");
         if (binding.verificationCode.getText().toString().length() == 0) {
             ViewExtensionsKt.showSnackBar(binding.contentLayout,
                     getString(R.string.enterVerifyCode), true);
+
             binding.progressIndicator.setVisibility(View.GONE);
             return;
         }
         DataService service = BackendHelper.INSTANCE.getRetrofit()
                 .create(DataService.class);
 
-        service.verify(new VerificateionModel(code,
+        service.verify(new VerificateionModel(this.code,
                 binding.verificationCode.getText().toString()))
                 .enqueue(new BackendCallBack<String>() {
                     @Override
                     public void onSuccess(String result) {
-                        Toast.makeText(RegisterActivity.this, result, Toast.LENGTH_LONG).show();
+                        //Toast.makeText(RegisterActivity.this, result, Toast.LENGTH_LONG).show();
                         binding.progressIndicator.setVisibility(View.GONE);
+                        LoginActivity.Factory.newInstance(RegisterActivity.this);
                     }
 
                     @Override
@@ -251,6 +372,7 @@ public class RegisterActivity extends AppCompatActivity {
                         binding.progressIndicator.setVisibility(View.GONE);
                         Toast.makeText(RegisterActivity.this, msg + "  " + code,
                                 Toast.LENGTH_LONG).show();
+                        binding.verifyButton.setText(getString(R.string.verify));
                     }
 
 
@@ -261,6 +383,7 @@ public class RegisterActivity extends AppCompatActivity {
                         ViewExtensionsKt.showSnackBar(binding.contentLayout, getString(R.string.connectionError),
                                 true);
                         binding.progressIndicator.setVisibility(View.GONE);
+                        binding.verifyButton.setText(getString(R.string.verify));
 
                     }
                 });

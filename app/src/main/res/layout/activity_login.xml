@@ -19,183 +19,156 @@
             android:transitionName="@string/bg_trans"
             tools:context=".ui.activity.LoginActivity">
 
-            <ImageView
-                android:id="@+id/logoImageView"
-                android:layout_width="120dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="64dp"
-                android:layout_weight="1"
-                android:contentDescription="@string/app_logo"
-                android:transitionName="@string/logo_trans"
-                app:layout_constraintBottom_toTopOf="@+id/guideline2"
-                app:layout_constraintDimensionRatio="h,1:1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0"
-                tools:src="@drawable/ic_launcher" />
-
-            <LinearLayout
-                android:id="@+id/contentLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="42dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="42dp"
-                android:layout_marginBottom="16dp"
-                android:alpha="1"
-                android:gravity="center"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/guideline2"
-                app:layout_constraintVertical_bias="0.29000002">
+        <LinearLayout
+            android:id="@+id/contentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="42dp"
+            android:layout_marginEnd="42dp"
+            android:alpha="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
 
-                <TextView
-                    android:id="@+id/titleText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/bahij_the_sans_arabic_bold"
-                    android:text="@string/login"
-                    android:textColor="@android:color/white"
-                    android:textSize="27sp" />
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardView"
-                    android:layout_width="match_parent"
-                    android:layout_height="240dp"
-                    android:padding="18dp"
-                    app:cardCornerRadius="5dp"
-                    app:cardElevation="8dp">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:padding="18dp">
-
-                        <EditText
-                            android:id="@+id/roomEditText"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="4dp"
-                            android:layout_marginEnd="4dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/bg_outline_gradient_btn"
-                            android:backgroundTint="@color/colorPrimary"
-                            android:fontFamily="@font/bahij_the_sans_arabic_plain"
-                            android:gravity="center"
-                            android:hint="@string/apartment"
-                            android:inputType="text"
-                            android:nextFocusLeft="@id/buildEditText"
-                            android:nextFocusRight="@id/buildEditText"
-                            android:nextFocusDown="@id/buildEditText"
-                            android:nextFocusUp="@id/buildEditText"
-                            android:padding="12dp"
-                            android:textColorHint="@color/colorPrimary"
-                            android:textSize="17sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/buildEditText"
-                            app:layout_constraintEnd_toEndOf="@+id/guideline"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/buildEditText" />
-
-                        <EditText
-                            android:id="@+id/buildEditText"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="4dp"
-                            android:layout_marginRight="4dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/bg_outline_gradient_btn"
-                            android:backgroundTint="@color/colorPrimary"
-                            android:fontFamily="@font/bahij_the_sans_arabic_plain"
-                            android:gravity="center"
-                            android:hint="@string/building"
-                            android:inputType="text"
-                            android:padding="12dp"
-                            android:textColorHint="@color/colorPrimary"
-                            android:textSize="17sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/guideline"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.19999999" />
-
-
-                        <EditText
-                            android:id="@+id/passwordEditText"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/bg_outline_gradient_btn"
-                            android:backgroundTint="@color/colorPrimary"
-                            android:fontFamily="@font/bahij_the_sans_arabic_plain"
-                            android:gravity="center"
-                            android:hint="@string/password"
-                            android:inputType="textPassword"
-                            android:padding="12dp"
-                            android:textColorHint="@color/colorPrimary"
-                            android:textSize="17sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/buildEditText"
-                            app:layout_constraintVertical_bias="0.41000003" />
-
-                        <androidx.constraintlayout.widget.Guideline
-                            android:id="@+id/guideline"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            app:layout_constraintGuide_percent="0.5" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                </androidx.cardview.widget.CardView>
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <Button
-                        android:id="@+id/loginButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="18dp"
-                        android:layout_marginTop="-2dp"
-                        android:layout_marginEnd="18dp"
-                        android:background="@drawable/bg_btn_red_radient"
-                        android:elevation="1dp"
-                        android:fontFamily="@font/bahij_the_sans_arabic_extra_bold"
-                        android:onClick="login"
-                        android:text="@string/register_as_user"
-                        android:textColor="@android:color/white"
-                        android:textSize="16sp" />
-
-                    <ProgressBar
-                        android:id="@+id/progressIndicator"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:layout_gravity="center"
-                        android:elevation="2dp"
-                        android:indeterminate="true"
-                        android:indeterminateTint="@android:color/white"
-                        android:visibility="invisible" />
-
-                </FrameLayout>
-
-            </LinearLayout>
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline2"
+            <TextView
+                android:id="@+id/titleText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.25" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:fontFamily="@font/bahij_the_sans_arabic_bold"
+                android:text="@string/login"
+                android:textColor="@android:color/white"
+                android:textSize="27sp" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                android:padding="18dp"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="8dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:padding="18dp">
+
+                    <EditText
+                        android:id="@+id/phoneEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_outline_gradient_btn"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:fontFamily="@font/bahij_the_sans_arabic_plain"
+                        android:gravity="center"
+                        android:hint="@string/phone_number"
+                        android:inputType="phone"
+                        android:padding="12dp"
+                        android:textColorHint="@color/colorPrimary"
+                        android:textSize="17sp"
+                        app:layout_constraintBottom_toTopOf="@+id/passwordEditText"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <EditText
+                        android:id="@+id/passwordEditText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_outline_gradient_btn"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:fontFamily="@font/bahij_the_sans_arabic_plain"
+                        android:gravity="center"
+                        android:hint="@string/password"
+                        android:inputType="textPassword"
+                        android:padding="12dp"
+                        android:textColorHint="@color/colorPrimary"
+                        android:textSize="17sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/phoneEditText" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/loginButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:layout_marginTop="-2dp"
+                    android:layout_marginEnd="18dp"
+                    android:background="@drawable/bg_btn_red_radient"
+                    android:elevation="1dp"
+                    android:fontFamily="@font/bahij_the_sans_arabic_extra_bold"
+                    android:onClick="login"
+                    android:text="@string/login"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+
+                <ProgressBar
+                    android:id="@+id/progressIndicator"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center"
+                    android:elevation="2dp"
+                    android:indeterminate="true"
+                    android:indeterminateTint="@android:color/white"
+                    android:visibility="invisible" />
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/contentLayout"
+            app:layout_constraintVertical_bias="0.8">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/bahij_the_sans_arabic_plain"
+                android:text="@string/dontHaveAccount"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/newLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/bahij_the_sans_arabic_extra_bold"
+                android:text="@string/register"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+
+
+                />
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
 

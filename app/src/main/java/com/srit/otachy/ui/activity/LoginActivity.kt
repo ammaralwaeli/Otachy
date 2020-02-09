@@ -1,48 +1,53 @@
 package com.srit.otachy.ui.activity
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat.getFont
 import androidx.core.view.forEach
 import androidx.core.view.get
 import androidx.databinding.DataBindingUtil
-import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.JsonObject
+import com.orhanobut.logger.Logger
 import com.srit.otachy.R
 import com.srit.otachy.database.api.BackendCallBack
 import com.srit.otachy.database.api.DataService
 import com.srit.otachy.database.models.LoginModel
-import com.srit.otachy.database.models.MeatServiceItemModel
 import com.srit.otachy.databinding.ActivityLoginBinding
 import com.srit.otachy.helpers.BackendHelper
 import com.srit.otachy.helpers.SharedPrefHelper
-import com.orhanobut.logger.Logger
-import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Call
-import retrofit2.Callback
 
 
 class LoginActivity : AppCompatActivity(){
     lateinit var binding: ActivityLoginBinding
 
+
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= DataBindingUtil.setContentView(this, R.layout.activity_login)
 
-        Glide
-            .with(this)
-            .load(R.drawable.ic_launcher)
-            .into(binding.logoImageView)
+        binding.newLogin.setOnClickListener {
+            RegisterActivity.newInstance(this)
+        }
 
-        animateAlpha()
+
+
     }
+
 
 
     companion object Factory{
@@ -55,21 +60,27 @@ class LoginActivity : AppCompatActivity(){
     override fun onBackPressed() {
         super.onBackPressed()
         finish()
+
     }
 
     private fun animateAlpha() {
         binding.contentLayout.animate().alpha(1.0F).setDuration(1500).start()
     }
 
+
+
     fun login(view: View) {
          val service= BackendHelper.retrofit.create(DataService::class.java)
 
         showLoading()
-        service.login(LoginModel(binding.roomEditText.text.toString(),
+        service.login(LoginModel(binding.phoneEditText.text.toString(),
             binding.passwordEditText.text.toString()))
             .enqueue(object : BackendCallBack<JsonObject>(){
                 override fun onSuccess(result: JsonObject?) {
-
+                    val access=result?.get("jwt")?.asString
+                    SharedPrefHelper.getInstance().accessToken=access
+                    //Toast.makeText(this@LoginActivity,UserModel.getInstance(access).toString(),Toast.LENGTH_LONG).show()
+                    HomeActivity.newInstance(this@LoginActivity)
                 }
 
                 override fun onError(code: Int, msg: String?) {
@@ -86,7 +97,6 @@ class LoginActivity : AppCompatActivity(){
 
     override fun onEnterAnimationComplete() {
         super.onEnterAnimationComplete()
-        binding.logoImageView.transitionName = ""
         binding.layout.transitionName = ""
 
 

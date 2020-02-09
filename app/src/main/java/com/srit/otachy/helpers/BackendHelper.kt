@@ -1,18 +1,25 @@
 package com.srit.otachy.helpers
 
+import android.util.Base64
 import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.nio.charset.StandardCharsets
 
 object BackendHelper {
     const val IMAGE_URL = "https://23.238.35.18:5400/api/"
     const val API_BASE_URL = "http://23.238.35.18:5400/api/"
-    private val gson = GsonBuilder()// TODO: set date format
-        //.setLenient()
+    val gson = GsonBuilder()// TODO: set date format
+        .setLenient()
         .create()
+
+
+
+
+
 
 
     private val mBuilder = Retrofit.Builder()

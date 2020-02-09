@@ -7,6 +7,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layoutDirection="rtl"
     android:background="@drawable/bg_login_turquoise_gradient"
     tools:context=".ui.activity.RegisterActivity">
 
@@ -70,7 +71,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/phoneNumber" />
 
                 <EditText
-                    android:id="@+id/username"
+                    android:id="@+id/name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -78,7 +79,7 @@
                     android:backgroundTint="@color/colorPrimary"
                     android:fontFamily="@font/bahij_the_sans_arabic_plain"
                     android:gravity="center"
-                    android:hint="@string/username"
+                    android:hint="@string/name"
                     android:inputType="text"
                     android:padding="12dp"
                     android:textColorHint="@color/colorPrimary"
@@ -100,10 +101,6 @@
                     android:gravity="center"
                     android:hint="@string/phone_number"
                     android:inputType="phone"
-                    android:nextFocusLeft="@id/buildEditText"
-                    android:nextFocusRight="@id/buildEditText"
-                    android:nextFocusUp="@id/buildEditText"
-                    android:nextFocusDown="@id/buildEditText"
                     android:padding="12dp"
                     android:textColorHint="@color/colorPrimary"
                     android:textSize="17sp"
@@ -111,7 +108,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/username" />
+                    app:layout_constraintTop_toBottomOf="@+id/name" />
 
                 <EditText
                     android:id="@+id/pass"
@@ -240,5 +237,42 @@
         </FrameLayout>
 
     </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/haveAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/contentLayout"
+        app:layout_constraintVertical_bias="0.79">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/bahij_the_sans_arabic_plain"
+            android:text="@string/haveAccount"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+
+
+        <TextView
+            android:id="@+id/newRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/bahij_the_sans_arabic_extra_bold"
+            android:text="@string/login"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+
+
+            />
+
+    </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

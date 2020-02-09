@@ -56,7 +56,7 @@
     <string name="q_kilo">ربع كيلو</string>
     <string name="three_quarters_kilo">ثلاث ارباع</string>
     <string name="register">تسجيل حساب</string>
-    <string name="username">اسم المستخدم</string>
+    <string name="name">اسم المستخدم</string>
     <string name="gov">المحافظة</string>
     <string name="city">المنطقة</string>
     <string name="invalidPhone">رقم الهاتف غير صالح</string>
@@ -73,4 +73,6 @@
     <string name="connectionError">خطأ في الاتصال</string>
     <string name="mustEnter">لا يمكن ترك الحقل فارغ</string>
     <string name="mustSixDigits">يجب ان يكون الرمز 6 ارقام</string>
+    <string name="dontHaveAccount">ليس لديك حساب ؟</string>
+    <string name="haveAccount">لديك حساب؟</string>
 </resources>

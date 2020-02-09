@@ -2,6 +2,7 @@ package com.srit.otachy.helpers
 
 import android.content.Context
 import android.graphics.Color
+import android.util.Base64
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.srit.otachy.R
 import com.orhanobut.logger.Logger
+import java.nio.charset.StandardCharsets
 
 fun Context.toast(msg:String){
     Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
@@ -38,4 +40,24 @@ fun ViewGroup.showSnackBar(msg:String, isError: Boolean= true){
         }
     }
     snackBar.show()
+}
+
+
+fun String.decodeToken(): String {
+    val splitString = this.split('.')
+//    val base64EncodedHeader = splitString[0]
+    val base64EncodedBody = splitString[1]
+//    val base64EncodedSignature = splitString[2]
+    return base64EncodedBody.base64Decode()
+}
+private fun String.base64Decode(): String {
+    val bytes: ByteArray = Base64.decode(this, Base64.URL_SAFE)
+    return String(bytes, StandardCharsets.UTF_8)
+}
+
+fun RecyclerView.createGridLayout(adapter: RecyclerView.Adapter<out RecyclerView.ViewHolder>) {
+    val itemMargin = resources.getDimension(R.dimen.item_margin).toInt()
+    setPadding(itemMargin, itemMargin, 0, itemMargin)
+    layoutManager = GridLayoutManager(context, 2)
+    this.adapter = adapter
 }

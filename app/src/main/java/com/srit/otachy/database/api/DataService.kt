@@ -1,15 +1,15 @@
 package com.srit.otachy.database.api
 
+import androidx.annotation.Nullable
 import com.google.gson.JsonObject
 import com.srit.otachy.database.models.*
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.http.*
 
 interface DataService{
-    @FormUrlEncoded
+
     @POST("account/loginUser")
-    fun login(loginModel: LoginModel
+    fun login(@Body loginModel: LoginModel
     ): Call<JsonObject>
 
 
@@ -24,13 +24,11 @@ interface DataService{
         @Body verificateionModel: VerificateionModel
     ): Call<String>
 
-
-    @FormUrlEncoded
-    @POST(".")
-    fun getServicesByCategory(
-        @Field("action") action: String="get-items",
-        @Field("category") categoryId: String
-    ): Call<List<ServiceItemModel>>
+    //@HTTP(method = "GET", path = "vendor/getVendors", hasBody = true)
+    @GET("vendor/getVendors")
+    fun getVendors(
+        @Body  government:Governments
+    ): Call<List<VendorModel>>
 
 
     // TODO: complete

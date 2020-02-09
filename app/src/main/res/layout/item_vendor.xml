@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="item"
+            type="com.srit.otachy.database.models.VendorModel" />
+          </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="18dp"
+        android:layout_marginStart="18dp"
+        android:elevation="@dimen/item_elevation"
+        android:layoutDirection="rtl"
+        android:orientation="vertical"
+        app:cardCornerRadius="5dp"
+        android:padding="12dp"
+        >
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+        <TextView
+            android:id="@+id/author"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#127992"
+            android:gravity="center_horizontal"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:text="@{item.name}"
+            android:textColor="#ffffff"
+            android:textSize="13sp" />
+        <TextView
+            android:id="@+id/book_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@{item.district}"
+            android:padding="10dp" />
+
+</LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

@@ -16,6 +16,9 @@ data class LoginModel(
     val mobileNumber:String,
     val password:String
 )
+data class Governments(
+    val government:String
+)
 data class RegisterModel(
     val username:String,
     val password:String,
