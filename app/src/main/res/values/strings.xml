@@ -75,4 +75,6 @@
     <string name="mustSixDigits">يجب ان يكون الرمز 6 ارقام</string>
     <string name="dontHaveAccount">ليس لديك حساب ؟</string>
     <string name="haveAccount">لديك حساب؟</string>
+    <string name="filter">اختيار محافظة</string>
+    <string name="searchCity">منطقة</string>
 </resources>

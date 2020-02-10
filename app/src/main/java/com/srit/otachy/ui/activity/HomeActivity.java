@@ -1,14 +1,17 @@
 package com.srit.otachy.ui.activity;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -17,26 +20,27 @@ import com.haytham.coder.otchy.adapters.recyclerAdapter.VendorRecyclerAdapter;
 import com.srit.otachy.R;
 import com.srit.otachy.database.api.BackendCallBack;
 import com.srit.otachy.database.api.DataService;
-import com.srit.otachy.database.models.Governments;
 import com.srit.otachy.database.models.UserModel;
 import com.srit.otachy.database.models.VendorModel;
-import com.srit.otachy.database.models.VerificateionModel;
 import com.srit.otachy.databinding.ActivityHomeBinding;
 import com.srit.otachy.helpers.BackendHelper;
 import com.srit.otachy.helpers.SharedPrefHelper;
 import com.srit.otachy.helpers.ViewExtensionsKt;
+import com.srit.otachy.ui.widgets.GovernmentDialog;
 
 import org.jetbrains.annotations.NotNull;
+import org.w3c.dom.Text;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements GovernmentDialog.GovernmentListener {
 
     ActivityHomeBinding binding;
     VendorRecyclerAdapter adapter;
+
+    String selectedGov;
 
 
     public static void newInstance(Context context) {
@@ -47,51 +51,73 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home);
-        loadVendors();
-
+        loadVendors(false);
         setSupportActionBar(binding.toolbar.toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getString(R.string.home));
 
-
-
-
-
-        // SaveNote Action
-        binding.toolbar.toolbar.inflateMenu(R.menu.menu_home);
-        binding.toolbar.toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+        binding.searchCity.addTextChangedListener(new TextWatcher() {
             @Override
-            public boolean onMenuItemClick(MenuItem item) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                if (item.getItemId() == R.id.shoppingCartMenuItem)
-                {
-                    // Do something
-                    Toast.makeText(getApplicationContext(), "Save", Toast.LENGTH_SHORT).show();
-                }
-                return true;
             }
-        });
 
-
-        // Dismiss Action
-        binding.toolbar.toolbar.setNavigationIcon(R.drawable.ic_filter);
-        binding.toolbar.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                // Do something
-                Toast.makeText(getApplicationContext(), "Dismiss", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                adapter.getFilter().filter(s);
+                binding.homeRecyclerView.setAdapter(adapter);
             }
         });
 
     }
 
-    private void loadVendors() {
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_home, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    private void shop() {
+
+    }
+
+
+    private void filter() {
+        GovernmentDialog governmentDialog = GovernmentDialog.newInstance();
+        governmentDialog.setListener(this);
+        governmentDialog.show(getSupportFragmentManager(), "");
+
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.shoppingCartMenuItem:
+                shop();
+                break;
+            case R.id.filter:
+                filter();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void loadVendors(boolean filter) {
         DataService service = BackendHelper.INSTANCE.getRetrofitWithAuth()
                 .create(DataService.class);
 
         String gov = UserModel.getInstance(SharedPrefHelper.getInstance().getAccessToken()).getGovernment();
-        service.getVendors(null)
+        if(filter){
+            gov=this.selectedGov;
+        }
+
+        service.getVendors(gov)
                 .enqueue(new BackendCallBack<List<VendorModel>>() {
                     @Override
                     public void onSuccess(List<VendorModel> result) {
@@ -122,4 +148,16 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onFinishEditDialog(String inputText) {
+        Toast.makeText(this, inputText, Toast.LENGTH_LONG).show();
+        if(inputText.equals("جميع المحافظات")){
+            this.selectedGov=null;
+
+        }else {
+            this.selectedGov = inputText;
+        }
+        loadVendors(true);
+
+    }
 }

@@ -8,15 +8,24 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layoutDirection="rtl">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <include layout="@layout/view_my_toolbar" android:id="@+id/toolbar"/>
+
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/view_my_toolbar"
+                android:title="@{@string/home}" />
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
                 <ProgressBar
                     android:id="@+id/progressIndicator2"
                     android:layout_width="wrap_content"
@@ -31,13 +40,31 @@
                     android:layout_gravity="center"
                     android:layout_margin="@dimen/error_text_margin"
                     android:gravity="start"
-                    android:visibility="gone"
-                    android:textAlignment="textStart" />
+                    android:textAlignment="textStart"
+                    android:visibility="gone" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/homeRecyclerView"
+                <EditText
+                    android:id="@+id/search_city"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:padding="10dp"
+                    android:hint="@string/city"
+                    android:drawableStart="@drawable/ic_search_black_24dp"
+                    android:drawablePadding="15dp"
+                    android:background="@drawable/bg_search_edittext"
+                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/homeRecyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+
+
             </LinearLayout>
         </LinearLayout>
 

@@ -13,7 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.activity.HomeActivity"/>
+        <activity android:name=".ui.activity.HomeActivity"
+            android:label="@string/home"
+            />
         <activity android:name=".ui.activity.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

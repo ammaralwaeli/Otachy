@@ -2,6 +2,8 @@ package com.haytham.coder.otchy.adapters.recyclerAdapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 
 import com.srit.otachy.database.models.UserModel
@@ -10,12 +12,16 @@ import com.srit.otachy.databinding.ItemVendorBinding
 
 
 class VendorRecyclerAdapter(private val dataList:List<VendorModel> ) :
-    RecyclerView.Adapter<VendorRecyclerAdapter.MyViewHolder>() {
+    RecyclerView.Adapter<VendorRecyclerAdapter.MyViewHolder>(), Filterable {
     private var listener: ItemListener? = null
 
-
+    var filterListSchools:List<VendorModel>
+    init {
+        this.filterListSchools=dataList
+    }
     class MyViewHolder(private val binding: ItemVendorBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
 
         fun bind(userModel: VendorModel) {
             binding.item = userModel
@@ -55,6 +61,35 @@ class VendorRecyclerAdapter(private val dataList:List<VendorModel> ) :
         this.listener = listener
     }
 
+    override fun getFilter(): Filter {
+        return object :Filter(){
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val str=constraint.toString()
+                com.orhanobut.logger.Logger.d("mySearch $str")
+                if(str.isEmpty()){
+                    filterListSchools=dataList
+                }else{
+                    val result=ArrayList<VendorModel>()
+                    for(row in dataList){
+
+                        if(row.district.contains(str)){
+
+                            result.add(row)
+                        }
+                        filterListSchools=result
+                    }
+                }
+                val filterResults=FilterResults()
+                filterResults.values=filterListSchools
+                return filterResults
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+
+            }
+
+        }
+    }
 }
 
 
