@@ -13,9 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.activity.HomeActivity"
-            android:label="@string/home"
-            />
+        <activity android:name=".ui.activity.ItemActivity"></activity>
+        <activity android:name=".ui.activity.CatigoryActivity" />
+        <activity
+            android:name=".ui.activity.HomeActivity"
+            android:label="@string/home" />
         <activity android:name=".ui.activity.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,13 +28,11 @@
         <activity
             android:name=".ui.activity.RegisterActivity"
             android:noHistory="true"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.LoginActivity"
             android:noHistory="true"
             android:screenOrientation="portrait" />
-
-
     </application>
 
 </manifest>

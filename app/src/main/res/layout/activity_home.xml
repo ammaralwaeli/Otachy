@@ -26,22 +26,6 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <ProgressBar
-                    android:id="@+id/progressIndicator2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/errorText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="@dimen/error_text_margin"
-                    android:gravity="start"
-                    android:textAlignment="textStart"
-                    android:visibility="gone" />
 
                 <EditText
                     android:id="@+id/search_city"
@@ -50,18 +34,38 @@
                     android:layout_margin="10dp"
                     android:padding="10dp"
                     android:hint="@string/city"
+                    android:fontFamily="@font/arial"
                     android:drawableStart="@drawable/ic_search_black_24dp"
                     android:drawablePadding="15dp"
                     android:background="@drawable/bg_search_edittext"
                     />
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ProgressBar
+                        android:id="@+id/progressIndicator2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/errorText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/error_text_margin"
+                        android:gravity="center"
+                        android:visibility="gone" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/homeRecyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
+                    <requestFocus />
+
                 </LinearLayout>
 
 

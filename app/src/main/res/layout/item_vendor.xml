@@ -32,6 +32,7 @@
             android:gravity="center_horizontal"
             android:paddingBottom="8dp"
             android:paddingTop="8dp"
+            android:fontFamily="@font/arial"
             android:text="@{item.name}"
             android:textColor="#ffffff"
             android:textSize="20sp" />
@@ -41,7 +42,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="20sp"
-            android:fontFamily="@font/bahij_the_sans_arabic_plain"
+            android:fontFamily="@font/arialbd"
             android:text="@{item.district}"
             android:padding="10dp" />
 

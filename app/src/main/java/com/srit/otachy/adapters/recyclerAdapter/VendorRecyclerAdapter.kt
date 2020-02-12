@@ -39,11 +39,11 @@ class VendorRecyclerAdapter(private val dataList:List<VendorModel> ) :
         )
     }
 
-    override fun getItemCount() = dataList.size
+    override fun getItemCount() = filterListSchools.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
-        val selectedItem = dataList[position]
+        val selectedItem = filterListSchools[position]
 
 
         holder.bind(selectedItem)

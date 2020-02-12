@@ -1,7 +1,5 @@
 package com.srit.otachy.database.models;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.io.Serializable;
 
 public class VendorModel implements Serializable {
@@ -9,6 +7,11 @@ public class VendorModel implements Serializable {
 	private String mobileNumber;
 	private String government;
 	private String district;
+	private UserVendorModel user;
+
+	public UserVendorModel getUser() {
+		return user;
+	}
 
 	public String getName(){
 		return name;
@@ -26,15 +29,14 @@ public class VendorModel implements Serializable {
 		return district;
 	}
 
-	@NotNull
 	@Override
- 	public String toString(){
-		return 
-			"VendorModel{" + 
-			"name = '" + name + '\'' + 
-			",mobileNumber = '" + mobileNumber + '\'' + 
-			",government = '" + government + '\'' + 
-			",district = '" + district + '\'' + 
-			"}";
-		}
+	public String toString() {
+		return "VendorModel{" +
+				"name='" + name + '\'' +
+				", mobileNumber='" + mobileNumber + '\'' +
+				", government='" + government + '\'' +
+				", district='" + district + '\'' +
+				", user=" + user.toString() +
+				'}';
+	}
 }

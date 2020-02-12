@@ -1,20 +1,18 @@
 package com.srit.otachy.ui.activity;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import com.haytham.coder.otchy.adapters.recyclerAdapter.VendorRecyclerAdapter;
 import com.srit.otachy.R;
@@ -29,13 +27,13 @@ import com.srit.otachy.helpers.ViewExtensionsKt;
 import com.srit.otachy.ui.widgets.GovernmentDialog;
 
 import org.jetbrains.annotations.NotNull;
-import org.w3c.dom.Text;
 
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 
-public class HomeActivity extends AppCompatActivity implements GovernmentDialog.GovernmentListener {
+public class HomeActivity extends AppCompatActivity implements GovernmentDialog.GovernmentListener,VendorRecyclerAdapter.ItemListener {
 
     ActivityHomeBinding binding;
     VendorRecyclerAdapter adapter;
@@ -51,9 +49,10 @@ public class HomeActivity extends AppCompatActivity implements GovernmentDialog.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home);
+        binding.progressIndicator2.setVisibility(View.VISIBLE);
         loadVendors(false);
         setSupportActionBar(binding.toolbar.toolbar);
-        getSupportActionBar().setTitle(getString(R.string.home));
+        Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.home));
 
         binding.searchCity.addTextChangedListener(new TextWatcher() {
             @Override
@@ -75,6 +74,11 @@ public class HomeActivity extends AppCompatActivity implements GovernmentDialog.
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        binding.progressIndicator2.setVisibility(View.GONE);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -122,15 +126,22 @@ public class HomeActivity extends AppCompatActivity implements GovernmentDialog.
                     @Override
                     public void onSuccess(List<VendorModel> result) {
                         adapter = new VendorRecyclerAdapter(result);
-
+                        if(adapter.getItemCount()==0){
+                            binding.errorText.setVisibility(View.VISIBLE);
+                            binding.errorText.setText(R.string.noVendors);
+                        }
+                        else {
+                            binding.errorText.setVisibility(View.GONE);
+                            binding.errorText.setText("");
+                        }
+                        adapter.setItemListener(HomeActivity.this);
                         ViewExtensionsKt.createGridLayout(binding.homeRecyclerView, adapter);
-
+                        binding.progressIndicator2.setVisibility(View.GONE);
                     }
 
                     @Override
                     public void onError(int code, String msg) {
                         binding.progressIndicator2.setVisibility(View.GONE);
-
                         binding.errorText.setText(msg + "  " + code);
                     }
 
@@ -150,14 +161,21 @@ public class HomeActivity extends AppCompatActivity implements GovernmentDialog.
 
     @Override
     public void onFinishEditDialog(String inputText) {
-        Toast.makeText(this, inputText, Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, inputText, Toast.LENGTH_LONG).show();
         if(inputText.equals("جميع المحافظات")){
             this.selectedGov=null;
 
         }else {
             this.selectedGov = inputText;
         }
+        binding.progressIndicator2.setVisibility(View.VISIBLE);
         loadVendors(true);
 
+    }
+
+    @Override
+    public void onItemClick(@NotNull VendorModel itemModel) {
+        Toast.makeText(this, itemModel.getUser().getId()+"", Toast.LENGTH_LONG).show();
+        CatigoryActivity.newInstance(this,itemModel.getUser().getId());
     }
 }

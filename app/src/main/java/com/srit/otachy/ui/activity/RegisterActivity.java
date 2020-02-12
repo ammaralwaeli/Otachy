@@ -26,6 +26,7 @@ import com.srit.otachy.databinding.ActivityRegisterBinding;
 import com.srit.otachy.helpers.BackendHelper;
 import com.srit.otachy.helpers.SmsBroadcastReceiver;
 import com.srit.otachy.helpers.ViewExtensionsKt;
+import com.srit.otachy.ui.SharedUI;
 import com.tiper.MaterialSpinner;
 
 import org.jetbrains.annotations.NotNull;
@@ -45,10 +46,10 @@ public class RegisterActivity extends AppCompatActivity {
     private String mGov = "";
     private boolean verificate;
     private int code;
-
     private static final int REQ_USER_CONSENT = 200;
     private static final String PHONE_NUMBER = "+14088984604";
     SmsBroadcastReceiver smsBroadcastReceiver;
+
 
 
     @Override
@@ -59,8 +60,6 @@ public class RegisterActivity extends AppCompatActivity {
                 //That gives all message to us.
                 // We need to get the code from inside with regex
                 String message = data.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE);
-                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-
                 getOtpFromMessage(message);
             }
         }
@@ -73,9 +72,8 @@ public class RegisterActivity extends AppCompatActivity {
         if (matcher.find()) {
             //Toast.makeText(this,matcher.group(0),Toast.LENGTH_LONG).show();
             String code=matcher.group(0);
-            Toast.makeText(this, code, Toast.LENGTH_LONG).show();
-            //binding.verificationCode.setText(code);
-            //verifyCode(Integer.decode(code));
+            binding.verificationCode.setText(code);
+            verifyCode(Integer.decode(code));
         }
     }
 
@@ -236,18 +234,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private boolean isValidPhoneNumber(String phone) {
-
-        if ((phone.startsWith("+96477") ||
-                phone.startsWith("+96478") ||
-                phone.startsWith("+96479") ||
-                phone.startsWith("+96475")) &&
-                phone.length() == 14) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     private Pair<Boolean, String> validataData() {
         int MINMUMPASSWORD = 6;
@@ -256,7 +242,7 @@ public class RegisterActivity extends AppCompatActivity {
             return new Pair<>(false, getString(R.string.enterUsername));
         } else if (binding.phoneNumber.getText().toString().equals("")) {
             return new Pair<>(false, getString(R.string.enterPhone));
-        } else if (!isValidPhoneNumber(binding.phoneNumber.getText().toString())) {
+        } else if (!SharedUI.isValidPhoneNumber(binding.phoneNumber.getText().toString())) {
             return new Pair<>(false, getString(R.string.invalidPhone));
         } else if (mGov.equals("")) {
             return new Pair<>(false, getString(R.string.selectGov));

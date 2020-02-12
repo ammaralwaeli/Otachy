@@ -1,21 +1,18 @@
 package com.srit.otachy.ui.activity
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat.getFont
 import androidx.core.view.forEach
 import androidx.core.view.get
 import androidx.databinding.DataBindingUtil
+import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.JsonObject
 import com.orhanobut.logger.Logger
@@ -27,6 +24,7 @@ import com.srit.otachy.database.models.UserModel
 import com.srit.otachy.databinding.ActivityLoginBinding
 import com.srit.otachy.helpers.BackendHelper
 import com.srit.otachy.helpers.SharedPrefHelper
+import com.srit.otachy.ui.SharedUI
 import retrofit2.Call
 
 
@@ -41,6 +39,16 @@ class LoginActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         binding= DataBindingUtil.setContentView(this, R.layout.activity_login)
 
+        if(SharedPrefHelper.getInstance().accessToken!=null){
+            HomeActivity.newInstance(this)
+        }
+
+        Glide
+            .with(this)
+            .load(R.drawable.ic_launcher)
+            .into(binding.logoImageView)
+
+        animateAlpha()
         binding.newLogin.setOnClickListener {
             RegisterActivity.newInstance(this)
         }
@@ -68,6 +76,19 @@ class LoginActivity : AppCompatActivity(){
         binding.contentLayout.animate().alpha(1.0F).setDuration(1500).start()
     }
 
+    private fun validateData():Pair<Boolean,String>{
+
+        if(!SharedUI.isValidPhoneNumber(binding.phoneEditText.text.toString())){
+            return Pair(false, getString(R.string.invalidPhone))
+        }else if(binding.phoneEditText.text.toString() == ""){
+            return Pair(false, getString(R.string.enterPhone))
+        }else if(binding.passwordEditText.text.toString()==""){
+            return Pair(false, getString(R.string.enterPass))
+        }else return Pair(true,"")
+
+
+    }
+
 
 
     fun login(view: View) {
@@ -80,17 +101,24 @@ class LoginActivity : AppCompatActivity(){
                 override fun onSuccess(result: JsonObject?) {
                     val access=result?.get("jwt")?.asString
                     SharedPrefHelper.getInstance().accessToken=access
-                    Toast.makeText(this@LoginActivity,
-                        UserModel.getInstance(access).toString(),Toast.LENGTH_LONG).show()
                     HomeActivity.newInstance(this@LoginActivity)
                 }
 
                 override fun onError(code: Int, msg: String?) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    if (msg == "\"-20004\"") {
+                        showErrorSnackBar(getString(R.string.invalidLoginData))
+
+                    }else if (msg == "\"-20003\""){
+                        showErrorSnackBar(getString(R.string.userIsNotExist))
+                    }
+                    hideLoading()
+
                 }
 
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
                     super.onFailure(call, t)
+                    showErrorSnackBar("${t.message}")
+                    hideLoading()
                 }
 
             })

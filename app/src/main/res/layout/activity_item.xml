@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.activity.ServiceActivity"
+        android:orientation="vertical"
+        android:layoutDirection="rtl">
+
+        <include
+            android:id="@+id/toolbarPlaceholder"
+            layout="@layout/view_my_toolbar"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="@dimen/recyclerPadding"
+                android:paddingBottom="@dimen/recyclerPadding"
+                tools:listitem="@layout/item_service"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+            <ProgressBar
+                android:id="@+id/progressIndicator"
+                android:elevation="2dp"
+                android:visibility="invisible"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                android:progressTint="@color/lightRed"/>
+
+
+            <TextView
+                android:visibility="invisible"
+                android:id="@+id/centered_text"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="@color/lightRed"
+                android:fontFamily="@font/bahij_the_sans_arabic_light"/>
+        </FrameLayout>
+
+    </LinearLayout>
+</layout>

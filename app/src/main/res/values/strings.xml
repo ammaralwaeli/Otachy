@@ -77,4 +77,9 @@
     <string name="haveAccount">لديك حساب؟</string>
     <string name="filter">اختيار محافظة</string>
     <string name="searchCity">منطقة</string>
+    <string name="invalidLoginData">خطأ في اسم المستخدم وكلمة المرور</string>
+    <string name="userIsNotExist">هذا المستخدم غير موجود</string>
+    <string name="noVendors">لا توجد محلات في هذه المحافظة</string>
+    <string name="noServoces">لا توجد خدمات لهذا المحل</string>
+    <string name="noCategories">لا توجد تصنيفات لهذا المحل</string>
 </resources>

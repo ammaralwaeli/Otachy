@@ -8,51 +8,40 @@ import retrofit2.http.*
 
 interface DataService{
 
-    @POST("account/loginUser")
-    fun login(@Body loginModel: LoginModel
+    @POST("api/account/loginUser")
+    fun login(
+        @Body loginModel: LoginModel
     ): Call<JsonObject>
 
 
-    @POST("account/registerUser")
+    @POST("api/account/registerUser")
     fun register(
         @Body registerModel: RegisterModel
     ): Call<JsonObject>
 
 
-    @POST("account/verify")
+    @POST("api/account/verify")
     fun verify(
         @Body verificateionModel: VerificateionModel
     ): Call<String>
 
     //@HTTP(method = "GET", path = "vendor/getVendors", hasBody = true)
-    @GET("vendor/getVendors")
+    @GET("api/vendor/getVendors")
     fun getVendors(
         @Query("government") government:String
     ): Call<List<VendorModel>>
 
 
-    // TODO: complete
-    @FormUrlEncoded
-    @POST(".")
-    fun getMeatServicesByCategory(
-        @Field("action") action: String="butcher-get-items",
-        @Field("category") categoryId: String
-    ): Call<List<MeatServiceItemModel>>
+    @GET("api/category/getUserCategories")
+    fun getUserCategories(
+        @Query("userId") userId:Int
+    ): Call<List<UserCategories>>
 
-    @FormUrlEncoded
-    @POST(".")
-    fun sendOrder(
-        @Field("action") action: String="bill",
-
-        @Field("date_r") date_r: String,
-        @Field("phone") phone: String,
-        @Field("description") description: String,
-        @Field("items[]") items: List<String>,
-        @Field("counts[]") counts: List<String>,
-        @Field("price[]") prices: List<String>,
-        @Field("category[]") categories: List<String>
-
-    ): Call<Void>
+    @GET("api/items/getUserItems")
+    fun getUserItems(
+        @Query("UserId") userId:Int,
+        @Query("CategoryId") categoryId:Int
+    ): Call<List<ServiceModel>>
 
 }
 

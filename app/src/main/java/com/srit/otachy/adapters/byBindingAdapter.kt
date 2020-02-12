@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.srit.otachy.R
+import com.srit.otachy.helpers.BackendHelper
 import com.tiper.MaterialSpinner
 import java.text.DecimalFormat
 
@@ -50,7 +51,7 @@ fun loadImage(iv: ImageView, bitmap: Bitmap?) {
 fun loadImageUrl(iv: ImageView, url: String) {
     Glide
         .with(iv.context)
-        .load(url)
+        .load(BackendHelper.API_BASE_URL+url)
         .into(iv)
 }
 

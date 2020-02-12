@@ -84,7 +84,8 @@ public class GovernmentDialog extends DialogFragment implements GovernmentRecycl
     public void onStart() {
         super.onStart();
         int width=(int) (getResources().getDisplayMetrics().widthPixels * 0.90);
-        getDialog().getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT);
+        int height=(int) (getResources().getDisplayMetrics().heightPixels * 0.70);
+        getDialog().getWindow().setLayout(width, height);
     }
 
     @Nullable

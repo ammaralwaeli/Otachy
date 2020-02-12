@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="serviceItemModel"
+            type="com.srit.otachy.database.models.ServiceModel" />
+    </data>
+
+    <LinearLayout
+        android:elevation="@dimen/item_elevation"
+        android:id="@+id/item_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:orientation="horizontal"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:layoutDirection="rtl"
+        android:layout_marginBottom="8dp">
+
+        <TextView
+            android:fontFamily="@font/bahij_the_sans_arabic_semi_bold"
+            android:id="@+id/item_icon"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            tools:text="2,000"
+            android:price="@{serviceItemModel.price}"
+            />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/darker_gray" />
+
+        <TextView
+            android:fontFamily="@font/bahij_the_sans_arabic_extra_bold"
+            android:id="@+id/item_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:paddingStart="18dp"
+            android:textAlignment="viewStart"
+            android:textSize="18sp"
+            android:text="@{serviceItemModel.item.name}"
+            tools:text="اسم الخدمة"
+            android:clipToPadding="false"
+            android:clipChildren="false"
+            tools:ignore="RtlSymmetry" />
+
+    </LinearLayout>
+</layout>
