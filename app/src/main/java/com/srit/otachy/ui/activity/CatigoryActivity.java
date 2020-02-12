@@ -97,6 +97,7 @@ public class CatigoryActivity extends AppCompatActivity implements CategoryRecyc
 
     @Override
     public void onItemClick(@NotNull UserCategories itemModel) {
+        CategotyModel.setInstance(itemModel.getCategory());
         ItemActivity.newInstance(this,this.userid,itemModel.getCategory().getId());
     }
 }

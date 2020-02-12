@@ -175,6 +175,8 @@ public class HomeActivity extends AppCompatActivity implements GovernmentDialog.
 
     @Override
     public void onItemClick(@NotNull VendorModel itemModel) {
+
+        VendorModel.setInstance(itemModel);
         Toast.makeText(this, itemModel.getUser().getId()+"", Toast.LENGTH_LONG).show();
         CatigoryActivity.newInstance(this,itemModel.getUser().getId());
     }

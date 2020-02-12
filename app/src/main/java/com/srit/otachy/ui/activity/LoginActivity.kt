@@ -20,7 +20,6 @@ import com.srit.otachy.R
 import com.srit.otachy.database.api.BackendCallBack
 import com.srit.otachy.database.api.DataService
 import com.srit.otachy.database.models.LoginModel
-import com.srit.otachy.database.models.UserModel
 import com.srit.otachy.databinding.ActivityLoginBinding
 import com.srit.otachy.helpers.BackendHelper
 import com.srit.otachy.helpers.SharedPrefHelper
@@ -94,6 +93,11 @@ class LoginActivity : AppCompatActivity(){
     fun login(view: View) {
          val service= BackendHelper.retrofit.create(DataService::class.java)
 
+        val value=validateData()
+        if(!value.first){
+            showErrorSnackBar(value.second)
+            return
+        }
         showLoading()
         service.login(LoginModel(binding.phoneEditText.text.toString(),
             binding.passwordEditText.text.toString()))

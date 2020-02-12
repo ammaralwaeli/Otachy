@@ -7,34 +7,21 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.srit.otachy.adapters.setFormattedPriceTxt
 import com.srit.otachy.database.local.ShoppingCartRepository
-import com.srit.otachy.database.models.CategoryItemModel
-import com.srit.otachy.database.models.ServiceItemModel
-import com.srit.otachy.database.models.ShoppingCartItemModel
 import com.srit.otachy.databinding.BottomSheetAddOrderBinding
 import com.orhanobut.logger.Logger
+import com.srit.otachy.database.local.VendorShopRepository
+import com.srit.otachy.database.models.*
 
 class OrderBottomSheet : BottomSheetDialogFragment() {
     private lateinit var binding: BottomSheetAddOrderBinding
-    private var categoryItemModel: CategoryItemModel? = null
-    private var serviceItemModel: ServiceItemModel? = null
-    private var numOfItems:Double= 1.0
+    private var numOfItems: Double = 1.0
+    private var totalPrice: Double = 0.0
 
     companion object Factory {
-        private const val EXTRA_CATEGORY: String = "extraCategory"
-        private const val EXTRA_SERVICE: String = "extraService"
 
         fun newInstance(
-            categoryItemModel: CategoryItemModel,
-            serviceItemModel: ServiceItemModel
         ): OrderBottomSheet {
-            val bottomSheet =
-                OrderBottomSheet()
-            val bundle = Bundle()
-            bundle.putParcelable(EXTRA_CATEGORY, categoryItemModel)
-            bundle.putParcelable(EXTRA_SERVICE, serviceItemModel)
-
-            bottomSheet.arguments = bundle
-            return bottomSheet
+            return OrderBottomSheet()
         }
     }
 
@@ -45,16 +32,12 @@ class OrderBottomSheet : BottomSheetDialogFragment() {
     ): View? {
         binding = BottomSheetAddOrderBinding.inflate(layoutInflater, container, false)
 
-        categoryItemModel = arguments?.getParcelable(EXTRA_CATEGORY)
-        serviceItemModel = arguments?.getParcelable(EXTRA_SERVICE)
-
-        serviceItemModel?.let {
-            binding.serviceItem= it
+        ServiceModel.getInstance()?.let {
+            binding.serviceItem = it
         }
 
         setListeners()
 
-        Logger.e("Hello otachy")
         binding
             .addBtn
             .setOnClickListener {
@@ -82,29 +65,37 @@ class OrderBottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun reCalculateTotalPrice() {
-        val service = serviceItemModel
+        val service = ServiceModel.getInstance()
         service?.let {
             binding.numOfItems.text = numOfItems.toString()
-            setFormattedPriceTxt(binding.totalPrice, numOfItems * service.price)
+            totalPrice = numOfItems * service.price
+            setFormattedPriceTxt(binding.totalPrice, totalPrice)
         }
     }
 
 
     private fun insertItem(it: View) {
-        val repo = ShoppingCartRepository(it.context)
+        val shoppingCartRepository = ShoppingCartRepository(it.context)
+        val vendorShopRepository = VendorShopRepository(it.context)
 
-        val category = categoryItemModel
-        val service = serviceItemModel
-
+        val category = CategotyModel.getInstance()
+        val service = ServiceModel.getInstance()
+        val vendor = VendorModel.getInstance()
         if (service != null && category != null) {
-            repo.insertItems(
+            vendorShopRepository.insertItems(
+                VendorShopModel(
+                    vendor.id.toInt(),
+                    vendor.name,
+                    vendor.district
+                )
+            )
+
+            shoppingCartRepository.insertItems(
                 ShoppingCartItemModel(
-                    service.id.toString(),
-                    service.name,
-                    numOfItems * service.price,
-                    category.categoryId,
-                    category.title,
-                    numOfItems
+                    service.item.id.toString(),
+                    VendorModel.getInstance().id,
+                    service.item.name,
+                    totalPrice, category.id.toString(), category.name, numOfItems
                 )
             )
         }

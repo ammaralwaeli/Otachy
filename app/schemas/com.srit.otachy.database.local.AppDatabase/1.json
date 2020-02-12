@@ -2,15 +2,21 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "795aab5fdf1fcb531d6f803aac9d86e7",
+    "identityHash": "9cf7bdcdb9a845576b9e0e8457065cff",
     "entities": [
       {
         "tableName": "ShoppingCartItemModel",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`itemId` TEXT NOT NULL, `itemName` TEXT NOT NULL, `totalPrice` REAL NOT NULL, `categoryId` TEXT NOT NULL, `categoryName` TEXT NOT NULL, `numberOfItems` REAL NOT NULL, PRIMARY KEY(`itemId`, `categoryId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`itemId` TEXT NOT NULL, `vendorId` TEXT NOT NULL, `itemName` TEXT NOT NULL, `totalPrice` REAL NOT NULL, `categoryId` TEXT NOT NULL, `categoryName` TEXT NOT NULL, `numberOfItems` REAL NOT NULL, PRIMARY KEY(`itemId`, `categoryId`))",
         "fields": [
           {
             "fieldPath": "itemId",
             "columnName": "itemId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "vendorId",
+            "columnName": "vendorId",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -54,12 +60,44 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "VendorShopModel",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`vendorId` INTEGER NOT NULL, `vendorName` TEXT NOT NULL, `vendorCity` TEXT NOT NULL, PRIMARY KEY(`vendorId`))",
+        "fields": [
+          {
+            "fieldPath": "vendorId",
+            "columnName": "vendorId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "vendorName",
+            "columnName": "vendorName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "vendorCity",
+            "columnName": "vendorCity",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "vendorId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '795aab5fdf1fcb531d6f803aac9d86e7')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9cf7bdcdb9a845576b9e0e8457065cff')"
     ]
   }
 }

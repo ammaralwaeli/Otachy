@@ -2,16 +2,9 @@ package com.haytham.coder.otchy.adapters.recyclerAdapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
-import com.srit.otachy.database.models.CategotyModel
 import com.srit.otachy.database.models.ServiceModel
-import com.srit.otachy.database.models.UserCategories
-import com.srit.otachy.databinding.ItemCatigoryBinding
-import com.srit.otachy.databinding.ItemGovernmentBinding
 import com.srit.otachy.databinding.ItemServiceBinding
-
 
 class ServiceRecyclerAdapter(private val dataList:List<ServiceModel> ) :
     RecyclerView.Adapter<ServiceRecyclerAdapter.MyViewHolder>() {
@@ -39,16 +32,12 @@ class ServiceRecyclerAdapter(private val dataList:List<ServiceModel> ) :
     override fun getItemCount() = dataList.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-
         val selectedItem = dataList[position]
-
-
         holder.bind(selectedItem)
         holder.itemView.setOnClickListener {
             listener?.onItemClick(selectedItem)
         }
     }
-
 
     interface ItemListener {
         fun onItemClick(itemModel: ServiceModel)
@@ -57,9 +46,6 @@ class ServiceRecyclerAdapter(private val dataList:List<ServiceModel> ) :
     fun setItemListener(listener: ItemListener) {
         this.listener = listener
     }
-
-
-
 }
 
 

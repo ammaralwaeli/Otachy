@@ -8,15 +8,27 @@ import kotlinx.android.parcel.Parcelize
 @Entity(primaryKeys = ["itemId", "categoryId"])
 data class  ShoppingCartItemModel(
     val itemId: String,
+    val vendorId: String,
     val itemName: String,
     val totalPrice: Double,
-
     val categoryId: String,
     val categoryName: String,
     val numberOfItems: Double
 ) : Parcelable {
 
     override fun toString(): String {
-        return "ShoppingCart(itemId='$itemId', itemName='$itemName', itemPrice=$totalPrice, categoryId='$categoryId', categoryName='$categoryName', numberOfItems=$numberOfItems)"
+        return "ShoppingCartItemModel(itemId='$itemId', vendorId='$vendorId', itemName='$itemName', totalPrice=$totalPrice, categoryId='$categoryId', categoryName='$categoryName', numberOfItems=$numberOfItems)"
+    }
+}
+
+@Parcelize
+@Entity(primaryKeys = ["vendorId"])
+data class  VendorShopModel(
+    val vendorId: Int,
+    val vendorName: String,
+    val vendorCity: String
+) : Parcelable {
+    override fun toString(): String {
+        return "VendorShopModel(vendorId=$vendorId, vendorName='$vendorName', vendorCity='$vendorCity')"
     }
 }

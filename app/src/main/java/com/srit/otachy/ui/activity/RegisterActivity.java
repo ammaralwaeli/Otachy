@@ -20,10 +20,12 @@ import com.google.gson.JsonObject;
 import com.srit.otachy.R;
 import com.srit.otachy.database.api.BackendCallBack;
 import com.srit.otachy.database.api.DataService;
+import com.srit.otachy.database.models.LoginModel;
 import com.srit.otachy.database.models.RegisterModel;
 import com.srit.otachy.database.models.VerificateionModel;
 import com.srit.otachy.databinding.ActivityRegisterBinding;
 import com.srit.otachy.helpers.BackendHelper;
+import com.srit.otachy.helpers.SharedPrefHelper;
 import com.srit.otachy.helpers.SmsBroadcastReceiver;
 import com.srit.otachy.helpers.ViewExtensionsKt;
 import com.srit.otachy.ui.SharedUI;
@@ -43,7 +45,7 @@ import static com.srit.otachy.adapters.ByBindingAdapterKt.setSpinnerList;
 public class RegisterActivity extends AppCompatActivity {
 
     private ActivityRegisterBinding binding;
-    private String mGov = "";
+    private String mGov = "",phone,password;
     private boolean verificate;
     private int code;
     private static final int REQ_USER_CONSENT = 200;
@@ -285,6 +287,8 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onSuccess(JsonObject result) {
                         showVerifyLayout();
                         startSmsUserConsent();
+                        RegisterActivity.this.phone=binding.phoneNumber.getText().toString();
+                        RegisterActivity.this.password=binding.pass.getText().toString();
                         verificate = true;
                         RegisterActivity.this.code = result.get("CodeId").getAsInt();
                         binding.progressIndicator.setVisibility(View.GONE);
@@ -298,8 +302,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     true);
                         }
                         binding.registerButton.setText(getString(R.string.register));
-                        /*Toast.makeText(RegisterActivity.this, msg,
-                                Toast.LENGTH_LONG).show();*/
+
                     }
 
                     @Override
@@ -311,7 +314,6 @@ public class RegisterActivity extends AppCompatActivity {
                                 true);
                         binding.progressIndicator.setVisibility(View.GONE);
                         binding.registerButton.setText(getString(R.string.register));
-
                     }
                 });
             }
@@ -328,6 +330,45 @@ public class RegisterActivity extends AppCompatActivity {
         }else{
             return new Pair<>(true,"");
         }
+    }
+
+    private void login(){
+
+        DataService service = BackendHelper.INSTANCE.getRetrofit()
+                .create(DataService.class);
+
+        service.login(new LoginModel(this.phone,this.password)
+        )
+                .enqueue(new BackendCallBack<JsonObject>() {
+                    @Override
+                    public void onSuccess(JsonObject result) {
+                        //Toast.makeText(RegisterActivity.this, result, Toast.LENGTH_LONG).show();
+                        binding.progressIndicator.setVisibility(View.GONE);
+                        String access=result.get("jwt").getAsString();
+                        SharedPrefHelper.getInstance().setAccessToken(access);
+                        HomeActivity.newInstance(RegisterActivity.this);
+                    }
+
+                    @Override
+                    public void onError(int code, String msg) {
+                        binding.progressIndicator.setVisibility(View.GONE);
+                        ViewExtensionsKt.showSnackBar(binding.contentLayout, msg,
+                                true);
+                        binding.verifyButton.setText(getString(R.string.verify));
+                    }
+
+
+                    @Override
+                    public void onFailure(@NotNull Call<JsonObject> call, @NotNull Throwable t) {
+                        super.onFailure(call, t);
+                        t.printStackTrace();
+                        ViewExtensionsKt.showSnackBar(binding.contentLayout, t.getMessage(),
+                                true);
+                        binding.progressIndicator.setVisibility(View.GONE);
+                        binding.verifyButton.setText(getString(R.string.verify));
+
+                    }
+                });
     }
 
     private void verifyCode(int code) {
@@ -350,7 +391,7 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onSuccess(String result) {
                         //Toast.makeText(RegisterActivity.this, result, Toast.LENGTH_LONG).show();
                         binding.progressIndicator.setVisibility(View.GONE);
-                        LoginActivity.Factory.newInstance(RegisterActivity.this);
+                        login();
                     }
 
                     @Override

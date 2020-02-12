@@ -7,13 +7,13 @@
         android:id="@+id/shoppingCartMenuItem"
         android:icon="@drawable/ic_shopping_cart_white"
         android:title="@string/shopping_cart"
-        app:showAsAction="always"
+        app:showAsAction="ifRoom"
         tools:ignore="AppCompatResource" />
 
     <item android:id="@+id/filter"
     android:icon="@drawable/ic_filter"
     android:title="@string/filter"
-    app:showAsAction="always"
+    app:showAsAction="ifRoom"
     tools:ignore="AppCompatResource"/>
 
 </menu>

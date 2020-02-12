@@ -7,12 +7,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import com.srit.otachy.ui.widgets.OrderBottomSheet;
 
 import com.haytham.coder.otchy.adapters.recyclerAdapter.ServiceRecyclerAdapter;
 import com.srit.otachy.R;
 import com.srit.otachy.database.api.BackendCallBack;
 import com.srit.otachy.database.api.DataService;
 import com.srit.otachy.database.models.ServiceModel;
+import com.srit.otachy.database.models.VendorModel;
 import com.srit.otachy.databinding.ActivityItemBinding;
 import com.srit.otachy.helpers.BackendHelper;
 
@@ -22,7 +24,7 @@ import java.util.List;
 
 import retrofit2.Call;
 
-public class ItemActivity extends AppCompatActivity {
+public class ItemActivity extends AppCompatActivity implements ServiceRecyclerAdapter.ItemListener {
 
     ActivityItemBinding binding;
     ServiceRecyclerAdapter adapter;
@@ -41,7 +43,7 @@ public class ItemActivity extends AppCompatActivity {
     }
 
 
-    private void loaditems() {
+    private void loadItems() {
         DataService service = BackendHelper.INSTANCE.getRetrofitWithAuth()
                 .create(DataService.class);
 
@@ -61,6 +63,7 @@ public class ItemActivity extends AppCompatActivity {
                         }else {
                             binding.centeredText.setVisibility(View.GONE);
                             binding.centeredText.setText("");
+                            adapter.setItemListener(ItemActivity.this);
                         }
                         binding.recyclerView.setAdapter(adapter);
                         binding.progressIndicator.setVisibility(View.GONE);
@@ -80,7 +83,6 @@ public class ItemActivity extends AppCompatActivity {
                         binding.centeredText.setVisibility(View.VISIBLE);
                         binding.centeredText.setText(getString(R.string.connectionError));
                         binding.progressIndicator.setVisibility(View.GONE);
-
                     }
                 });
     }
@@ -90,6 +92,16 @@ public class ItemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_item);
-        loaditems();
+        binding.progressIndicator.setVisibility(View.VISIBLE);
+        loadItems();
+    }
+
+    @Override
+    public void onItemClick(@NotNull ServiceModel itemModel) {
+
+
+        ServiceModel.setInstance(itemModel);
+        OrderBottomSheet.Factory.newInstance().show(getSupportFragmentManager(),"");
+
     }
 }

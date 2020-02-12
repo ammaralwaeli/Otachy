@@ -16,8 +16,7 @@ import java.text.DecimalFormat
 
 @BindingAdapter("android:price")
 fun setFormattedPrice(textView: TextView, price: Double) {
-    val completePrice = price * 1000
-    val formattedPrice = DecimalFormat("#,###,###").format(completePrice)
+    val formattedPrice = DecimalFormat("#,###").format(price)
     textView.text = formattedPrice
 }
 

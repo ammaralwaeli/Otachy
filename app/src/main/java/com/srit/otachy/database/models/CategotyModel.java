@@ -1,5 +1,7 @@
 package com.srit.otachy.database.models;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 
 public class CategotyModel implements Serializable {
@@ -7,6 +9,16 @@ public class CategotyModel implements Serializable {
 	private String name;
 	private String description;
 	private String imageUri;
+
+	private static CategotyModel instance;
+
+	public static CategotyModel getInstance() {
+		return instance;
+	}
+
+	public static void setInstance(CategotyModel instance) {
+		CategotyModel.instance = instance;
+	}
 
 	public int getId(){
 		return id;
@@ -24,6 +36,7 @@ public class CategotyModel implements Serializable {
 		return imageUri;
 	}
 
+	@NotNull
 	@Override
  	public String toString(){
 		return 
