@@ -1,12 +1,16 @@
 package com.srit.otachy.ui.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.haytham.coder.otchy.adapters.recyclerAdapter.CategoryRecyclerAdapter;
 import com.srit.otachy.R;
@@ -14,8 +18,10 @@ import com.srit.otachy.database.api.BackendCallBack;
 import com.srit.otachy.database.api.DataService;
 import com.srit.otachy.database.models.CategotyModel;
 import com.srit.otachy.database.models.UserCategories;
+import com.srit.otachy.database.models.VendorShopModel;
 import com.srit.otachy.databinding.ActivityCatigoryBinding;
 import com.srit.otachy.helpers.BackendHelper;
+import com.srit.otachy.ui.widgets.VendorDialog;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -24,7 +30,7 @@ import java.util.Objects;
 
 import retrofit2.Call;
 
-public class CatigoryActivity extends AppCompatActivity implements CategoryRecyclerAdapter.ItemListener{
+public class CatigoryActivity extends AppCompatActivity implements CategoryRecyclerAdapter.ItemListener, VendorDialog.VendorListener {
 
 
     ActivityCatigoryBinding binding;
@@ -90,7 +96,7 @@ public class CatigoryActivity extends AppCompatActivity implements CategoryRecyc
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_catigory);
         setSupportActionBar(binding.toolbarPlaceholder.toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.otchy));
+        Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.categories));
         binding.progressIndicator2.setVisibility(View.VISIBLE);
         loadCategories();
     }
@@ -99,5 +105,32 @@ public class CatigoryActivity extends AppCompatActivity implements CategoryRecyc
     public void onItemClick(@NotNull UserCategories itemModel) {
         CategotyModel.setInstance(itemModel.getCategory());
         ItemActivity.newInstance(this,this.userid,itemModel.getCategory().getId());
+    }
+
+    private void shop() {
+        VendorDialog vendorDialog=new VendorDialog();
+        vendorDialog.setListener(this);
+        vendorDialog.show(getSupportFragmentManager(),"");
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.shoppingCartMenuItem1:
+                shop();
+                break;
+            case R.id.filter:
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_shop, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public void onFinishEditDialog(VendorShopModel inputText) {
+        Toast.makeText(this, inputText.toString(), Toast.LENGTH_LONG).show();
     }
 }

@@ -82,4 +82,5 @@
     <string name="noVendors">لا توجد محلات في هذه المحافظة</string>
     <string name="noServoces">لا توجد خدمات لهذا المحل</string>
     <string name="noCategories">لا توجد تصنيفات لهذا المحل</string>
+    <string name="services">الخدمات</string>
 </resources>

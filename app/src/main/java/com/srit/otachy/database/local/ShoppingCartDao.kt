@@ -24,9 +24,9 @@ interface ShoppingCartDao{
 
 
     @Query("SELECT * FROM shoppingCartItemModel WHERE shoppingCartItemModel.vendorId=:vendorId")
-    fun getItems(vendorId:Int): LiveData<List<ShoppingCartItemModel>>
+    fun getItems(vendorId:Int): List<ShoppingCartItemModel>
 
 
     @Query("SELECT * FROM vendorShopModel")
-    fun getVendorss(): LiveData<List<VendorShopModel>>
+    fun getVendors(): List<VendorShopModel>
 }

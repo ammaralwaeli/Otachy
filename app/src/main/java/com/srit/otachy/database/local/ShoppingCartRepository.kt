@@ -2,6 +2,7 @@ package com.srit.otachy.database.local
 
 import android.content.Context
 import android.os.AsyncTask
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import com.srit.otachy.database.models.ShoppingCartItemModel
 import com.srit.otachy.database.models.VendorShopModel
@@ -9,16 +10,17 @@ import com.srit.otachy.database.models.VendorShopModel
 
 class ShoppingCartRepository(context: Context){
     private val dao:ShoppingCartDao= AppDatabase.getInstance(context).shoppingCartDao()
-
+    val ctx=context
     fun deleteItems(vararg items: ShoppingCartItemModel){
         DeleteShoppingCartItemsAsyncTask(dao).execute(*items)
     }
 
     fun insertItems(vararg items: ShoppingCartItemModel){
         InsertShoppingCartItemsAsyncTask(dao).execute(*items)
+        Toast.makeText(ctx,"inserted", Toast.LENGTH_LONG).show()
     }
 
-    fun getItems(vendorId:Int): LiveData<List<ShoppingCartItemModel>> = dao.getItems(vendorId)
+    fun getItems(vendorId:Int): List<ShoppingCartItemModel> = dao.getItems(vendorId)
 }
 
 class DeleteShoppingCartItemsAsyncTask (private val dao:ShoppingCartDao)

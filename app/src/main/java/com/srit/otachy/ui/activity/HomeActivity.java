@@ -20,11 +20,13 @@ import com.srit.otachy.database.api.BackendCallBack;
 import com.srit.otachy.database.api.DataService;
 import com.srit.otachy.database.models.UserModel;
 import com.srit.otachy.database.models.VendorModel;
+import com.srit.otachy.database.models.VendorShopModel;
 import com.srit.otachy.databinding.ActivityHomeBinding;
 import com.srit.otachy.helpers.BackendHelper;
 import com.srit.otachy.helpers.SharedPrefHelper;
 import com.srit.otachy.helpers.ViewExtensionsKt;
 import com.srit.otachy.ui.widgets.GovernmentDialog;
+import com.srit.otachy.ui.widgets.VendorDialog;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -33,7 +35,7 @@ import java.util.Objects;
 
 import retrofit2.Call;
 
-public class HomeActivity extends AppCompatActivity implements GovernmentDialog.GovernmentListener,VendorRecyclerAdapter.ItemListener {
+public class HomeActivity extends AppCompatActivity implements GovernmentDialog.GovernmentListener,VendorRecyclerAdapter.ItemListener,VendorDialog.VendorListener {
 
     ActivityHomeBinding binding;
     VendorRecyclerAdapter adapter;
@@ -87,7 +89,9 @@ public class HomeActivity extends AppCompatActivity implements GovernmentDialog.
     }
 
     private void shop() {
-
+        VendorDialog vendorDialog=new VendorDialog();
+        vendorDialog.setListener(this);
+        vendorDialog.show(getSupportFragmentManager(),"");
     }
 
 
@@ -179,5 +183,11 @@ public class HomeActivity extends AppCompatActivity implements GovernmentDialog.
         VendorModel.setInstance(itemModel);
         Toast.makeText(this, itemModel.getUser().getId()+"", Toast.LENGTH_LONG).show();
         CatigoryActivity.newInstance(this,itemModel.getUser().getId());
+    }
+
+
+    @Override
+    public void onFinishEditDialog(VendorShopModel inputText) {
+        Toast.makeText(this, inputText.toString(), Toast.LENGTH_LONG).show();
     }
 }

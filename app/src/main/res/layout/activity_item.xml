@@ -16,7 +16,9 @@
 
         <include
             android:id="@+id/toolbarPlaceholder"
-            layout="@layout/view_my_toolbar"/>
+            layout="@layout/view_my_toolbar"
+            app:title="@{@string/services}"
+            />
 
         <FrameLayout
             android:layout_width="match_parent"

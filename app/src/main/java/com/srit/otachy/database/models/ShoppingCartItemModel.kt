@@ -28,6 +28,10 @@ data class  VendorShopModel(
     val vendorName: String,
     val vendorCity: String
 ) : Parcelable {
+    companion object Instance{
+        lateinit var instance:VendorShopModel
+
+    }
     override fun toString(): String {
         return "VendorShopModel(vendorId=$vendorId, vendorName='$vendorName', vendorCity='$vendorCity')"
     }

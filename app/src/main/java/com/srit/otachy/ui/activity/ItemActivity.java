@@ -1,12 +1,19 @@
 package com.srit.otachy.ui.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
+
+import com.haytham.coder.otchy.adapters.recyclerAdapter.VendorShopRecyclerAdapter;
+import com.srit.otachy.database.models.VendorShopModel;
 import com.srit.otachy.ui.widgets.OrderBottomSheet;
 
 import com.haytham.coder.otchy.adapters.recyclerAdapter.ServiceRecyclerAdapter;
@@ -17,14 +24,16 @@ import com.srit.otachy.database.models.ServiceModel;
 import com.srit.otachy.database.models.VendorModel;
 import com.srit.otachy.databinding.ActivityItemBinding;
 import com.srit.otachy.helpers.BackendHelper;
+import com.srit.otachy.ui.widgets.VendorDialog;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 
-public class ItemActivity extends AppCompatActivity implements ServiceRecyclerAdapter.ItemListener {
+public class ItemActivity extends AppCompatActivity implements ServiceRecyclerAdapter.ItemListener, VendorDialog.VendorListener {
 
     ActivityItemBinding binding;
     ServiceRecyclerAdapter adapter;
@@ -41,6 +50,29 @@ public class ItemActivity extends AppCompatActivity implements ServiceRecyclerAd
         in.putExtra(CAT_ID_EXTRA, catId);
         context.startActivity(in);
     }
+
+    private void shop() {
+        VendorDialog vendorDialog=VendorDialog.newInstance();
+        vendorDialog.setListener(this);
+        vendorDialog.show(getSupportFragmentManager(),"");
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.shoppingCartMenuItem1:
+                shop();
+                break;
+            case R.id.filter:
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_shop, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
 
 
     private void loadItems() {
@@ -92,6 +124,8 @@ public class ItemActivity extends AppCompatActivity implements ServiceRecyclerAd
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_item);
+        setSupportActionBar(binding.toolbarPlaceholder.toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.services));
         binding.progressIndicator.setVisibility(View.VISIBLE);
         loadItems();
     }
@@ -103,5 +137,11 @@ public class ItemActivity extends AppCompatActivity implements ServiceRecyclerAd
         ServiceModel.setInstance(itemModel);
         OrderBottomSheet.Factory.newInstance().show(getSupportFragmentManager(),"");
 
+    }
+
+    @Override
+    public void onFinishEditDialog(VendorShopModel inputText) {
+        VendorShopModel.instance=inputText;
+        Toast.makeText(this, inputText.toString(), Toast.LENGTH_LONG).show();
     }
 }
