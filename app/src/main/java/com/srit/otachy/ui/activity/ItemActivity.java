@@ -12,8 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.haytham.coder.otchy.adapters.recyclerAdapter.VendorShopRecyclerAdapter;
 import com.srit.otachy.database.models.VendorShopModel;
+import com.srit.otachy.ui.Logout;
 import com.srit.otachy.ui.widgets.OrderBottomSheet;
 
 import com.haytham.coder.otchy.adapters.recyclerAdapter.ServiceRecyclerAdapter;
@@ -21,7 +21,6 @@ import com.srit.otachy.R;
 import com.srit.otachy.database.api.BackendCallBack;
 import com.srit.otachy.database.api.DataService;
 import com.srit.otachy.database.models.ServiceModel;
-import com.srit.otachy.database.models.VendorModel;
 import com.srit.otachy.databinding.ActivityItemBinding;
 import com.srit.otachy.helpers.BackendHelper;
 import com.srit.otachy.ui.widgets.VendorDialog;
@@ -103,7 +102,11 @@ public class ItemActivity extends AppCompatActivity implements ServiceRecyclerAd
 
                     @Override
                     public void onError(int code, String msg) {
+                        if(code==401){
+                            Logout.expireToken(binding.contentLayoutItem,ItemActivity.this);
+                        }
                         binding.progressIndicator.setVisibility(View.GONE);
+                        binding.centeredText.setVisibility(View.VISIBLE);
                         binding.centeredText.setText(msg + "  " + code);
                     }
 
@@ -142,6 +145,7 @@ public class ItemActivity extends AppCompatActivity implements ServiceRecyclerAd
     @Override
     public void onFinishEditDialog(VendorShopModel inputText) {
         VendorShopModel.instance=inputText;
-        Toast.makeText(this, inputText.toString(), Toast.LENGTH_LONG).show();
+        ShoppingCartActivity.newInstance(this);
+        Toast.makeText(this, "Ammar", Toast.LENGTH_LONG).show();
     }
 }

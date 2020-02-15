@@ -38,6 +38,7 @@
     <string name="no_empty_field_allowed">لا يجب ترك حقل فارغ!</string>
     <string name="log_out">تسجيل الخروج</string>
     <string name="no_item">لا يوجد عناصر!</string>
+    <string name="empty_sopping_cart">سلة المشتريات فارغة!</string>
     <string name="app_logo">شعار التطبيق</string>
     <string name="title_activity_splash_screen">SplashScreen</string>
     <string name="bg_trans">background_transition</string>

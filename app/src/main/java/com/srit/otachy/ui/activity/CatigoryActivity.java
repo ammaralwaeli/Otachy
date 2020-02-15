@@ -21,6 +21,7 @@ import com.srit.otachy.database.models.UserCategories;
 import com.srit.otachy.database.models.VendorShopModel;
 import com.srit.otachy.databinding.ActivityCatigoryBinding;
 import com.srit.otachy.helpers.BackendHelper;
+import com.srit.otachy.ui.Logout;
 import com.srit.otachy.ui.widgets.VendorDialog;
 
 import org.jetbrains.annotations.NotNull;
@@ -74,7 +75,11 @@ public class CatigoryActivity extends AppCompatActivity implements CategoryRecyc
 
                     @Override
                     public void onError(int code, String msg) {
+                        if(code==401){
+                            Logout.expireToken(binding.contentLayoutCat,CatigoryActivity.this);
+                        }
                         binding.progressIndicator2.setVisibility(View.GONE);
+                        binding.errorText.setVisibility(View.VISIBLE);
                         binding.errorText.setText(msg + "  " + code);
                     }
 
@@ -131,6 +136,8 @@ public class CatigoryActivity extends AppCompatActivity implements CategoryRecyc
 
     @Override
     public void onFinishEditDialog(VendorShopModel inputText) {
+        VendorShopModel.instance=inputText;
+        ShoppingCartActivity.newInstance(this);
         Toast.makeText(this, inputText.toString(), Toast.LENGTH_LONG).show();
     }
 }

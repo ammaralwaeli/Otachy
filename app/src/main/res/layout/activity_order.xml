@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.activity.OrderDetailsActivity"
+        android:layoutDirection="rtl"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbarPlaceholder"
+            layout="@layout/view_my_toolbar"
+            app:title="@{@string/shopping_cart}" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="32dp">
+
+
+                <TextView
+                    android:id="@+id/recived_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/send_date_time"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/bahij_the_sans_arabic_bold" />
+
+                <EditText
+                    android:id="@+id/sendTimeEditText"
+                    android:elevation="2dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/send_date_time"
+                    android:gravity="center"
+                    android:focusable="false"
+                    android:padding="12dp"
+                    android:textSize="14sp"
+                    android:textAlignment="center"
+                    android:inputType="datetime"
+                    android:fontFamily="@font/bahij_the_sans_arabic_semi_light"
+                    android:background="@drawable/bg_edit_text"
+                    android:layout_marginBottom="16dp"
+                    android:onClick="pickSendDate"/>
+
+
+                <TextView
+                    android:id="@+id/receiveTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/receive_date_time"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/bahij_the_sans_arabic_bold" />
+
+                <EditText
+                    android:id="@+id/receiveTimeEditText"
+                    android:elevation="2dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/receive_date_time"
+                    android:focusable="false"
+                    android:gravity="center"
+                    android:padding="12dp"
+                    android:textSize="14sp"
+                    android:inputType="datetime"
+                    android:textAlignment="center"
+                    android:layout_marginBottom="16dp"
+                    android:fontFamily="@font/bahij_the_sans_arabic_semi_light"
+                    android:background="@drawable/bg_edit_text"
+                    android:onClick="pickReceiveDate"/>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/phone_number"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/bahij_the_sans_arabic_bold" />
+
+                <EditText
+                    android:id="@+id/phoneNumberEditText"
+                    android:elevation="2dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/phone_number"
+                    android:gravity="center"
+                    android:padding="12dp"
+                    android:textAlignment="center"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="16dp"
+                    android:inputType="phone"
+                    android:fontFamily="@font/bahij_the_sans_arabic_semi_light"
+                    android:background="@drawable/bg_edit_text" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/order_description"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/bahij_the_sans_arabic_bold" />
+
+                <EditText
+                    android:id="@+id/orderDescriptionEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_edit_text"
+                    android:elevation="3dp"
+                    android:fontFamily="@font/bahij_the_sans_arabic_semi_light"
+                    android:gravity="center|top"
+                    android:hint="@string/order_description"
+                    android:inputType="textMultiLine"
+
+                    android:padding="12dp"
+                    android:textAlignment="center"
+                    android:textSize="14sp" />
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-2dp">
+
+                    <Button
+                        android:id="@+id/orderBtn"
+                        android:elevation="1dp"
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/order"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/bahij_the_sans_arabic_extra_bold"
+                        android:textColor="@android:color/white"
+                        android:background="@drawable/bg_btn_red_radient"
+                        android:onClick="order"/>
+
+                    <ProgressBar
+                        android:id="@+id/progressIndicator"
+                        android:elevation="2dp"
+                        android:visibility="invisible"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center"
+                        android:indeterminate="true"
+                        android:indeterminateTint="@android:color/white"/>
+
+                </FrameLayout>
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+
+
+
+</layout>

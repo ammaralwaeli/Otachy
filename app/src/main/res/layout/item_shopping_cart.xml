@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ndroid="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="shoppingCartModel"
+            type="com.srit.otachy.database.models.ShoppingCartItemModel" />
+    </data>
+
+    <LinearLayout
+        android:elevation="@dimen/item_elevation"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_home_height"
+        android:layoutDirection="rtl"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:layout_marginBottom="8dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:pieces="@{shoppingCartModel.numberOfItems}"
+                tools:text="5 كيلو"
+                android:textSize="12sp"
+                android:fontFamily="@font/bahij_the_sans_arabic_semi_bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{shoppingCartModel.categoryName}"
+                tools:text="غسيل"
+                android:textSize="12sp"
+                ndroid:fontFamily="@font/bahij_the_sans_arabic_semi_bold" />
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/darker_gray"
+            android:layout_marginEnd="12dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{shoppingCartModel.itemName}"
+            tools:text="قميص"
+            android:textStyle="bold"
+            android:fontFamily="@font/bahij_the_sans_arabic_extra_bold"
+            android:textSize="17sp"
+            android:layout_marginEnd="4dp" />
+
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textAlignment="viewStart"
+            android:priceTxt="@{shoppingCartModel.totalPrice}"
+            tools:text="10 الف"
+            android:fontFamily="@font/bahij_the_sans_arabic_semi_light" />
+
+
+       <LinearLayout
+           android:layout_width="wrap_content"
+           android:layout_height="match_parent"
+           android:orientation="vertical"
+           android:layout_marginEnd="8dp"
+           android:gravity="center">
+
+           <Button
+               android:id="@+id/orderBtn"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:background="@drawable/bg_btn_red_radient"
+               android:text="@string/order"
+               android:textSize="16sp"
+               android:minHeight="0dp"
+               android:padding="2dp"
+               android:textColor="@android:color/white"
+               android:layout_marginTop="4dp"
+               android:fontFamily="@font/bahij_the_sans_arabic_extra_bold" />
+
+           <Button
+               android:id="@+id/deleteBtn"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:background="@drawable/bg_outline_gradient_btn"
+               android:text="@string/delete"
+               android:textSize="16sp"
+               android:minHeight="0dp"
+               android:padding="2dp"
+               android:textColor="@color/darkRed"
+               android:layout_marginTop="4dp"
+               android:fontFamily="@font/bahij_the_sans_arabic_extra_bold" />
+       </LinearLayout>
+
+    </LinearLayout>
+</layout>
