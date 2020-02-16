@@ -86,7 +86,8 @@ class OrderBottomSheet : BottomSheetDialogFragment() {
                 VendorShopModel(
                     vendor.id.toInt(),
                     vendor.name,
-                    vendor.district
+                    vendor.district,
+                    VendorModel.getInstance().user.id.toString()
                 )
             )
 

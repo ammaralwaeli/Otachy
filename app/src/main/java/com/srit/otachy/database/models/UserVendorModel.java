@@ -3,11 +3,22 @@ package com.srit.otachy.database.models;
 import java.io.Serializable;
 
 public class UserVendorModel implements Serializable {
+
 	private int id;
 	private String username;
 	private String mobileNumber;
 	private String government;
 	private String district;
+
+	private static UserVendorModel instance;
+
+	public static UserVendorModel getInstance() {
+		return instance;
+	}
+
+	public static void setInstance(UserVendorModel instance) {
+		UserVendorModel.instance = instance;
+	}
 
 	public int getId(){
 		return id;

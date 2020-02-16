@@ -7,18 +7,29 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.haytham.coder.otchy.adapters.recyclerAdapter.ShoppingCartRecyclerAdapter;
 import com.srit.otachy.R;
 import com.srit.otachy.adapters.ByBindingAdapterKt;
 import com.srit.otachy.database.local.ShoppingCartRepository;
 import com.srit.otachy.database.local.VendorShopRepository;
+import com.srit.otachy.database.models.OrderItemModel;
+import com.srit.otachy.database.models.OrderModel;
+import com.srit.otachy.database.models.ServiceModel;
 import com.srit.otachy.database.models.ShoppingCartItemModel;
+import com.srit.otachy.database.models.UserModel;
+import com.srit.otachy.database.models.UserVendorModel;
+import com.srit.otachy.database.models.VendorModel;
 import com.srit.otachy.database.models.VendorShopModel;
 import com.srit.otachy.databinding.ActivityShoppingCartBinding;
+import com.srit.otachy.helpers.SharedPrefHelper;
 
 import org.jetbrains.annotations.NotNull;
+import org.threeten.bp.LocalDateTime;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class ShoppingCartActivity extends AppCompatActivity implements ShoppingCartRecyclerAdapter.ItemListener {
@@ -74,9 +85,60 @@ public class ShoppingCartActivity extends AppCompatActivity implements ShoppingC
     @Override
     public void onItemOrder(@NotNull ShoppingCartItemModel itemModel) {
 
+        ShoppingCartItemModel.instance=itemModel;
+        OrderItemModel orderItem=new OrderItemModel(
+                Integer.parseInt(itemModel.getItemId()),
+                Integer.parseInt(itemModel.getCategoryId()),
+                (int)itemModel.getNumberOfItems(),
+                (itemModel.getTotalPrice()/itemModel.getNumberOfItems())+"",
+                itemModel.getTotalPrice()+"");
+
+        int userid=Integer.parseInt(UserModel.getInstance(SharedPrefHelper.getInstance().getAccessToken()).getId());
+        ArrayList<OrderItemModel> orderItemModels=new ArrayList<>();
+        orderItemModels.add(orderItem);
+        OrderModel order=new OrderModel(
+                userid,Integer.parseInt(itemModel.getVendorId()),
+                Integer.parseInt(VendorShopModel.instance.getVendorUserId()),
+                LocalDateTime.now(),LocalDateTime.now(),
+                adapter.getTotalPrice()+"","",orderItemModels
+        );
+
+
+        Toast.makeText(this, order.toString(), Toast.LENGTH_SHORT).show();
+
+        OrderModel.setInstance(order);
+
+        OrderActivity.newInstance(this);
+
+
     }
 
     public void orderAll(View view) {
-        
+        ShoppingCartItemModel.orders=adapter.getDataList();
+        ArrayList<OrderItemModel> orders=new ArrayList<>();
+        int vendorId=0;
+        for(ShoppingCartItemModel itemModel:ShoppingCartItemModel.orders){
+            orders.add(new OrderItemModel(
+                    Integer.parseInt(itemModel.getItemId()),
+                    Integer.parseInt(itemModel.getCategoryId()),
+                    (int)(itemModel.getNumberOfItems()),
+                    itemModel.getTotalPrice()/itemModel.getNumberOfItems()+"",
+                    itemModel.getTotalPrice()+""
+            ));
+            vendorId=Integer.parseInt(itemModel.getVendorId());
+        }
+        int userid=Integer.parseInt(UserModel.getInstance(SharedPrefHelper.getInstance().getAccessToken()).getId());
+
+        OrderModel order=new OrderModel(
+                userid,vendorId,
+                Integer.parseInt(VendorShopModel.instance.getVendorUserId()),
+                LocalDateTime.now(),LocalDateTime.now(),
+                adapter.getTotalPrice()+"","",orders
+        );
+
+
+        OrderModel.setInstance(order);
+
+        OrderActivity.newInstance(this);
     }
 }

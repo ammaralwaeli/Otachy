@@ -10,7 +10,7 @@ import com.srit.otachy.databinding.ItemShoppingCartBinding
 
 class ShoppingCartRecyclerAdapter:
     RecyclerView.Adapter<ShoppingCartRecyclerAdapter.MyViewHolder>() {
-    private var dataList:List<ShoppingCartItemModel> = ArrayList()
+    var dataList:List<ShoppingCartItemModel> = ArrayList()
     private var listener: ItemListener? = null
 
     class MyViewHolder(val binding: ItemShoppingCartBinding) :

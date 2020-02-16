@@ -1,16 +1,17 @@
 package com.srit.otachy.adapters
 
 import android.graphics.Bitmap
-import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.orhanobut.logger.Logger
 import com.srit.otachy.R
 import com.srit.otachy.helpers.BackendHelper
 import com.tiper.MaterialSpinner
+import org.threeten.bp.LocalDateTime
+import java.lang.Exception
 import java.text.DecimalFormat
 
 
@@ -26,7 +27,24 @@ fun setPieces(textView: TextView, pieces: Double) {
 }
 
 
+@BindingAdapter("mine:setDate")
+fun setTextFromDate(textView: TextView, date: LocalDateTime?){
+    try {
+        textView.text = date?.format(dateTimeFormatter)
+    }catch (e: Exception){
+        Logger.e("binding error: ${e.message}")
+    }
 
+}
+
+fun getTextFromDate(date: LocalDateTime?):String{
+    try {
+        return date?.format(dateTimeBackendFormatter).toString()
+    }catch (e: Exception){
+        return date.toString()
+    }
+
+}
 
 @BindingAdapter("android:priceTxt")
 fun setFormattedPriceTxt(textView: TextView, price: Double) {

@@ -60,6 +60,8 @@ public class HomeActivity extends AppCompatActivity
         setSupportActionBar(binding.toolbar.toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.home));
 
+
+
         binding.searchCity.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

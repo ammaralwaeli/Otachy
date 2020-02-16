@@ -17,6 +17,7 @@ public class VendorModel implements Serializable {
 	public static VendorModel getInstance(){
 		return instasne;
 	}
+
 	public static void setInstance(VendorModel vendorModel){
 		instasne=vendorModel;
 	}

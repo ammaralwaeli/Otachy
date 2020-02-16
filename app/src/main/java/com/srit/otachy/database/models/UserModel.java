@@ -10,6 +10,7 @@ import java.io.Serializable;
 
 public class UserModel implements Serializable {
 
+    private String id;
     private String username;
     private String mobileNo;
     private String role;
@@ -41,6 +42,10 @@ public class UserModel implements Serializable {
         Government = government;
     }
 
+    public String getId() {
+        return id;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -57,11 +62,12 @@ public class UserModel implements Serializable {
         return Government;
     }
 
-    @NotNull
+
     @Override
     public String toString() {
         return "UserModel{" +
-                "username='" + username + '\'' +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
                 ", mobileNo='" + mobileNo + '\'' +
                 ", role='" + role + '\'' +
                 ", Government='" + Government + '\'' +
