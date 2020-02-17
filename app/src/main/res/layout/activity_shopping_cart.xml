@@ -60,7 +60,6 @@
 
 
             <Button
-                android:enabled="false"
                 android:id="@+id/orderAllBtn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

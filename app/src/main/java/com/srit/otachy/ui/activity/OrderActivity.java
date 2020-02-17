@@ -13,19 +13,30 @@ import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.haytham.coder.otchy.adapters.recyclerAdapter.ServiceRecyclerAdapter;
 import com.srit.otachy.R;
 import com.srit.otachy.adapters.ByBindingAdapterKt;
 import com.srit.otachy.adapters.LocalDateTimeConverterKt;
+import com.srit.otachy.database.api.BackendCallBack;
+import com.srit.otachy.database.api.DataService;
 import com.srit.otachy.database.local.ShoppingCartRepository;
 import com.srit.otachy.database.models.OrderModel;
+import com.srit.otachy.database.models.ServiceModel;
 import com.srit.otachy.database.models.ShoppingCartItemModel;
 import com.srit.otachy.databinding.ActivityOrderBinding;
+import com.srit.otachy.helpers.BackendHelper;
+import com.srit.otachy.helpers.ViewExtensionsKt;
+import com.srit.otachy.ui.Logout;
 
+import org.jetbrains.annotations.NotNull;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.LocalTime;
 
 import java.util.Calendar;
+import java.util.List;
+
+import retrofit2.Call;
 
 public class OrderActivity extends AppCompatActivity {
 
@@ -35,6 +46,7 @@ public class OrderActivity extends AppCompatActivity {
     LocalDate date;
     LocalTime time;
     LocalDateTime dateTime;
+    ShoppingCartRepository repository;
 
     LocalDateTime reciveDate,sendDate;
     public static void newInstance(Context context) {
@@ -102,11 +114,11 @@ public class OrderActivity extends AppCompatActivity {
                         dateTime=LocalDateTime.of(date,time);
                         if(sendTimeEditText) {
                             ByBindingAdapterKt.setTextFromDate(binding.sendTimeEditText,dateTime);
-                            sendDate=LocalDateTime.parse(ByBindingAdapterKt.getTextFromDate(dateTime), LocalDateTimeConverterKt.getDateTimeBackendFormatter());
+                            sendDate=dateTime;
                             //binding.sendTimeEditText.setText(dateTime.toString());
                         }else{
                             ByBindingAdapterKt.setTextFromDate(binding.receiveTimeEditText,dateTime);
-                            reciveDate=LocalDateTime.parse(ByBindingAdapterKt.getTextFromDate(dateTime), LocalDateTimeConverterKt.getDateTimeBackendFormatter());
+                            reciveDate=dateTime;
                             //binding.receiveTimeEditText.setText(dateTime.toString());
                         }
                     }
@@ -119,12 +131,50 @@ public class OrderActivity extends AppCompatActivity {
         orderModel.setDeleverDate(sendDate);
         orderModel.setReceiveDate(reciveDate);
         orderModel.setDescrition(binding.orderDescriptionEditText.getText().toString());
-
-        binding.orderDescriptionEditText.setText(orderModel.toString());
-
-        ShoppingCartRepository repository=new ShoppingCartRepository(this);
-        repository.deleteItems(ShoppingCartItemModel.instance);
-
+        sendOrder(orderModel);
         //Toast.makeText(this,orderModel.toString(),Toast.LENGTH_LONG).show();
     }
+
+    private void sendOrder(OrderModel orderModel){
+        DataService service = BackendHelper.INSTANCE.getRetrofitWithAuth()
+                .create(DataService.class);
+
+
+
+
+        repository=new ShoppingCartRepository(this);
+
+
+        service.addOrder(orderModel)
+                .enqueue(new BackendCallBack<String>() {
+                    @Override
+                    public void onSuccess(String result) {
+                        if(result.equals("Order added successfully")) {
+                            Toast.makeText(OrderActivity.this, result, Toast.LENGTH_LONG).show();
+                            for (ShoppingCartItemModel item : ShoppingCartItemModel.orders) {
+                                repository.deleteItems(item);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(int code, String msg) {
+                        if(code==401){
+                            Logout.expireToken(binding.layout,OrderActivity.this);
+                        }
+                        binding.progressIndicator.setVisibility(View.GONE);
+                        ViewExtensionsKt.showSnackBar(binding.layout,msg+"  "+code,true);
+                    }
+
+
+                    @Override
+                    public void onFailure(@NotNull Call<String> call, @NotNull Throwable t) {
+                        super.onFailure(call, t);
+                        t.printStackTrace();
+                        ViewExtensionsKt.showSnackBar(binding.layout,getString(R.string.connectionError),true);
+                        binding.progressIndicator.setVisibility(View.GONE);
+                    }
+                });
+    }
+
 }

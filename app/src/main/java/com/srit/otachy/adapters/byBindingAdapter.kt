@@ -28,32 +28,28 @@ fun setPieces(textView: TextView, pieces: Double) {
 
 
 @BindingAdapter("mine:setDate")
-fun setTextFromDate(textView: TextView, date: LocalDateTime?){
+fun setTextFromDate(textView: TextView, date: LocalDateTime?) {
     try {
         textView.text = date?.format(dateTimeFormatter)
-    }catch (e: Exception){
+    } catch (e: Exception) {
         Logger.e("binding error: ${e.message}")
     }
 
 }
 
-fun getTextFromDate(date: LocalDateTime?):String{
-    try {
-        return date?.format(dateTimeBackendFormatter).toString()
-    }catch (e: Exception){
-        return date.toString()
-    }
-
+fun getTextFromDate(date: LocalDateTime?): String? {
+    return date?.toString()
 }
 
 @BindingAdapter("android:priceTxt")
 fun setFormattedPriceTxt(textView: TextView, price: Double) {
 
 
-    if((price-price.toInt())==0.0) {
-        textView.text = "${price.toInt()} ${textView.context.resources.getString(R.string.thousand)}"
+    if ((price - price.toInt()) == 0.0) {
+        textView.text =
+            "${price.toInt()} ${textView.context.resources.getString(R.string.thousand)}"
 
-    }else{
+    } else {
         textView.text = "$price ${textView.context.resources.getString(R.string.thousand)}"
     }
 
@@ -68,19 +64,19 @@ fun loadImage(iv: ImageView, bitmap: Bitmap?) {
 fun loadImageUrl(iv: ImageView, url: String) {
     Glide
         .with(iv.context)
-        .load(BackendHelper.API_BASE_URL+url)
+        .load(BackendHelper.API_BASE_URL + url)
         .into(iv)
 }
 
 
 @BindingAdapter("android:setList")
-fun <T>setSpinnerList(spinner: MaterialSpinner, list:List<T>) {
+fun <T> setSpinnerList(spinner: MaterialSpinner, list: List<T>) {
     ArrayAdapter<T>(
         spinner.context,
         android.R.layout.simple_spinner_item, list
     ).apply {
         setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner.adapter= this
+        spinner.adapter = this
     }
 
 

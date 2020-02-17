@@ -35,7 +35,6 @@ import java.util.Objects;
 public class ShoppingCartActivity extends AppCompatActivity implements ShoppingCartRecyclerAdapter.ItemListener {
 
 
-
     ActivityShoppingCartBinding binding;
     ShoppingCartRecyclerAdapter adapter;
     ShoppingCartRepository repository;
@@ -84,8 +83,9 @@ public class ShoppingCartActivity extends AppCompatActivity implements ShoppingC
 
     @Override
     public void onItemOrder(@NotNull ShoppingCartItemModel itemModel) {
-
-        ShoppingCartItemModel.instance=itemModel;
+        List<ShoppingCartItemModel> orders=new ArrayList<>();
+        orders.add(itemModel);
+        ShoppingCartItemModel.orders=orders;
         OrderItemModel orderItem=new OrderItemModel(
                 Integer.parseInt(itemModel.getItemId()),
                 Integer.parseInt(itemModel.getCategoryId()),

@@ -43,5 +43,11 @@ interface DataService{
         @Query("CategoryId") categoryId:Int
     ): Call<List<ServiceModel>>
 
+
+    @POST("api/orders/addOrder")
+    fun addOrder(
+       @Body order:OrderModel
+    ): Call<String>
+
 }
 

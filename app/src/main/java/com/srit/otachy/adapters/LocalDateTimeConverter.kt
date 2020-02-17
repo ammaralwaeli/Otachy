@@ -11,7 +11,7 @@ import java.util.*
 
 
 val dateTimeBackendFormatter: DateTimeFormatter =
-    DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH)
+    DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm", Locale.ENGLISH)
 val dateTimeFormatter: DateTimeFormatter =
     DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm", Locale.ENGLISH)
 
@@ -22,20 +22,15 @@ class LocalDateTimeConverter : JsonDeserializer<LocalDateTime>, JsonSerializer<L
         typeOfT: Type?,
         context: JsonDeserializationContext?
     ): LocalDateTime = try {
-        if (json.asString.contains('T'))
-            LocalDateTime.parse(json.asString, dateTimeBackendFormatter)
-        else LocalDateTime.of(
-            LocalDate.parse(json.asString, dateTimeFormatter),
-            LocalTime.now()
-        )
+        LocalDateTime.parse(json.asString)
     } catch (e: Exception) {
-        LocalDateTime.now()
+        LocalDateTime.MIN
     }
 
     override fun serialize(
         src: LocalDateTime,
         typeOfSrc: Type?,
         context: JsonSerializationContext?
-    ): JsonElement = JsonPrimitive(src.format(dateTimeFormatter))
+    ): JsonElement = JsonPrimitive(src.format(dateTimeBackendFormatter))
 
 }
