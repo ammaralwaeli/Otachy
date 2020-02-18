@@ -30,15 +30,16 @@ data class  VendorShopModel(
     val vendorId: Int,
     val vendorName: String,
     val vendorCity: String,
-    val vendorUserId: String
+    val vendorUserId: String,
+    val homeRecieve:Int
 ) : Parcelable {
     companion object Instance{
         lateinit var instance:VendorShopModel
-
     }
 
     override fun toString(): String {
-        return "VendorShopModel(vendorId=$vendorId, vendorName='$vendorName', vendorCity='$vendorCity', vendorUserId='$vendorUserId')"
+        return "VendorShopModel(vendorId=$vendorId, vendorName='$vendorName', vendorCity='$vendorCity', vendorUserId='$vendorUserId', homeRecieve=$homeRecieve)"
     }
+
 
 }

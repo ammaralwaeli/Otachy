@@ -18,6 +18,7 @@ import com.srit.otachy.database.api.BackendCallBack;
 import com.srit.otachy.database.api.DataService;
 import com.srit.otachy.database.models.CategotyModel;
 import com.srit.otachy.database.models.UserCategories;
+import com.srit.otachy.database.models.VendorModel;
 import com.srit.otachy.database.models.VendorShopModel;
 import com.srit.otachy.databinding.ActivityCatigoryBinding;
 import com.srit.otachy.helpers.BackendHelper;
@@ -36,14 +37,12 @@ public class CatigoryActivity extends AppCompatActivity implements CategoryRecyc
 
     ActivityCatigoryBinding binding;
     CategoryRecyclerAdapter adapter;
-    static String USER_ID_EXTRA="USER_ID_EXTRA";
 
     int userid;
 
-    public static void newInstance(Context context,int userId) {
+    public static void newInstance(Context context) {
 
         Intent in=new Intent(context, CatigoryActivity.class);
-        in.putExtra(USER_ID_EXTRA,userId);
         context.startActivity(in);
     }
 
@@ -51,9 +50,6 @@ public class CatigoryActivity extends AppCompatActivity implements CategoryRecyc
         DataService service = BackendHelper.INSTANCE.getRetrofitWithAuth()
                 .create(DataService.class);
 
-        Intent in=getIntent();
-
-        this.userid=in.getIntExtra(CatigoryActivity.USER_ID_EXTRA,0);
 
 
         service.getUserCategories(this.userid)
@@ -103,13 +99,14 @@ public class CatigoryActivity extends AppCompatActivity implements CategoryRecyc
         setSupportActionBar(binding.toolbarPlaceholder.toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.categories));
         binding.progressIndicator2.setVisibility(View.VISIBLE);
+        userid=VendorModel.getInstance().getUser().getId();
         loadCategories();
     }
 
     @Override
     public void onItemClick(@NotNull UserCategories itemModel) {
         CategotyModel.setInstance(itemModel.getCategory());
-        ItemActivity.newInstance(this,this.userid,itemModel.getCategory().getId());
+        ItemActivity.newInstance(this);
     }
 
     private void shop() {

@@ -192,7 +192,7 @@ public class HomeActivity extends AppCompatActivity
 
         VendorModel.setInstance(itemModel);
         Toast.makeText(this, itemModel.getUser().getId()+"", Toast.LENGTH_LONG).show();
-        CatigoryActivity.newInstance(this,itemModel.getUser().getId());
+        CatigoryActivity.newInstance(this);
     }
 
 

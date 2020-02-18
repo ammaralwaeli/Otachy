@@ -87,7 +87,8 @@ class OrderBottomSheet : BottomSheetDialogFragment() {
                     vendor.id.toInt(),
                     vendor.name,
                     vendor.district,
-                    VendorModel.getInstance().user.id.toString()
+                    VendorModel.getInstance().user.id.toString(),
+                    VendorModel.getInstance().homeRecieve
                 )
             )
 
@@ -96,7 +97,10 @@ class OrderBottomSheet : BottomSheetDialogFragment() {
                     service.item.id.toString(),
                     VendorModel.getInstance().id,
                     service.item.name,
-                    totalPrice, category.id.toString(), category.name, numOfItems
+                    totalPrice,
+                    category.id.toString(),
+                    category.name,
+                    numOfItems
                 )
             )
         }

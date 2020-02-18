@@ -11,6 +11,7 @@ public class VendorModel implements Serializable {
 	private String government;
 	private String district;
 	private UserVendorModel user;
+	private int homeRecieve;
 
 	private static VendorModel instasne;
 
@@ -46,7 +47,10 @@ public class VendorModel implements Serializable {
 		return id;
 	}
 
-	@NotNull
+	public int getHomeRecieve() {
+		return homeRecieve;
+	}
+
 	@Override
 	public String toString() {
 		return "VendorModel{" +
@@ -56,6 +60,7 @@ public class VendorModel implements Serializable {
 				", government='" + government + '\'' +
 				", district='" + district + '\'' +
 				", user=" + user +
+				", homeRecieve=" + homeRecieve +
 				'}';
 	}
 }

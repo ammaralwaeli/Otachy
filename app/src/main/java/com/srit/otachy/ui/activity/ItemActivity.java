@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.srit.otachy.database.models.CategotyModel;
+import com.srit.otachy.database.models.VendorModel;
 import com.srit.otachy.database.models.VendorShopModel;
 import com.srit.otachy.ui.Logout;
 import com.srit.otachy.ui.widgets.OrderBottomSheet;
@@ -37,16 +39,12 @@ public class ItemActivity extends AppCompatActivity implements ServiceRecyclerAd
     ActivityItemBinding binding;
     ServiceRecyclerAdapter adapter;
 
-    static String USER_ID_EXTRA = "USER_ID_EXTRA";
-    static String CAT_ID_EXTRA = "CAT_ID_EXTRA";
 
     int catID,userid;
 
-    public static void newInstance(Context context, int userId, int catId) {
+    public static void newInstance(Context context) {
 
         Intent in = new Intent(context, ItemActivity.class);
-        in.putExtra(USER_ID_EXTRA, userId);
-        in.putExtra(CAT_ID_EXTRA, catId);
         context.startActivity(in);
     }
 
@@ -78,12 +76,9 @@ public class ItemActivity extends AppCompatActivity implements ServiceRecyclerAd
         DataService service = BackendHelper.INSTANCE.getRetrofitWithAuth()
                 .create(DataService.class);
 
-        Intent in = getIntent();
 
-        this.userid = in.getIntExtra(ItemActivity.USER_ID_EXTRA, 0);
-        this.catID = in.getIntExtra(ItemActivity.CAT_ID_EXTRA, 0);
 
-        service.getUserItems(this.userid,catID)
+        service.getUserItems(this.userid,this.catID)
                 .enqueue(new BackendCallBack<List<ServiceModel>>() {
                     @Override
                     public void onSuccess(List<ServiceModel> result) {
@@ -130,6 +125,8 @@ public class ItemActivity extends AppCompatActivity implements ServiceRecyclerAd
         setSupportActionBar(binding.toolbarPlaceholder.toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.services));
         binding.progressIndicator.setVisibility(View.VISIBLE);
+        this.catID= CategotyModel.getInstance().getId();
+        userid= VendorModel.getInstance().getUser().getId();
         loadItems();
     }
 

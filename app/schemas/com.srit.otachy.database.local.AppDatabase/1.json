@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "353593178bfb214ac98861924447c488",
+    "identityHash": "49a7b1285ae13d785cc3e2897c6336e9",
     "entities": [
       {
         "tableName": "ShoppingCartItemModel",
@@ -63,7 +63,7 @@
       },
       {
         "tableName": "VendorShopModel",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`vendorId` INTEGER NOT NULL, `vendorName` TEXT NOT NULL, `vendorCity` TEXT NOT NULL, `vendorUserId` TEXT NOT NULL, PRIMARY KEY(`vendorId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`vendorId` INTEGER NOT NULL, `vendorName` TEXT NOT NULL, `vendorCity` TEXT NOT NULL, `vendorUserId` TEXT NOT NULL, `homeRecieve` INTEGER NOT NULL, PRIMARY KEY(`vendorId`))",
         "fields": [
           {
             "fieldPath": "vendorId",
@@ -88,6 +88,12 @@
             "columnName": "vendorUserId",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "homeRecieve",
+            "columnName": "homeRecieve",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -103,7 +109,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '353593178bfb214ac98861924447c488')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '49a7b1285ae13d785cc3e2897c6336e9')"
     ]
   }
 }

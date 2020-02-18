@@ -23,6 +23,8 @@ import com.srit.otachy.database.local.ShoppingCartRepository;
 import com.srit.otachy.database.models.OrderModel;
 import com.srit.otachy.database.models.ServiceModel;
 import com.srit.otachy.database.models.ShoppingCartItemModel;
+import com.srit.otachy.database.models.VendorModel;
+import com.srit.otachy.database.models.VendorShopModel;
 import com.srit.otachy.databinding.ActivityOrderBinding;
 import com.srit.otachy.helpers.BackendHelper;
 import com.srit.otachy.helpers.ViewExtensionsKt;
@@ -59,6 +61,7 @@ public class OrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_order);
 
+        homeReceive();
         binding.sendTimeEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,6 +76,17 @@ public class OrderActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+
+    private void homeReceive(){
+        if(VendorShopModel.instance.getHomeRecieve()!=1){
+            binding.recivedId.setVisibility(View.GONE);
+            binding.sendTimeEditText.setVisibility(View.GONE);
+        }else{
+            binding.recivedId.setVisibility(View.VISIBLE);
+            binding.sendTimeEditText.setVisibility(View.VISIBLE);
+        }
     }
 
     private void showDatePicker(final boolean sendTimeEditText) {
