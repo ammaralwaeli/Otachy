@@ -64,7 +64,7 @@ public class VendorDialog extends DialogFragment implements VendorShopRecyclerAd
     @Override
     public void onStart() {
         super.onStart();
-        int width=(int) (getResources().getDisplayMetrics().widthPixels * 0.90);;
+        int width=(int) (getResources().getDisplayMetrics().widthPixels * 0.90);
         getDialog().getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 

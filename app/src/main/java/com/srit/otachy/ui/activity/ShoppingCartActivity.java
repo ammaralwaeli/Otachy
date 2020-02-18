@@ -90,8 +90,8 @@ public class ShoppingCartActivity extends AppCompatActivity implements ShoppingC
                 Integer.parseInt(itemModel.getItemId()),
                 Integer.parseInt(itemModel.getCategoryId()),
                 (int)itemModel.getNumberOfItems(),
-                (itemModel.getTotalPrice()/itemModel.getNumberOfItems())+"",
-                itemModel.getTotalPrice()+"");
+                (int)(itemModel.getTotalPrice()/itemModel.getNumberOfItems())+"",
+                (int)itemModel.getTotalPrice()+"");
 
         int userid=Integer.parseInt(UserModel.getInstance(SharedPrefHelper.getInstance().getAccessToken()).getId());
         ArrayList<OrderItemModel> orderItemModels=new ArrayList<>();
@@ -100,7 +100,7 @@ public class ShoppingCartActivity extends AppCompatActivity implements ShoppingC
                 userid,Integer.parseInt(itemModel.getVendorId()),
                 Integer.parseInt(VendorShopModel.instance.getVendorUserId()),
                 LocalDateTime.now(),LocalDateTime.now(),
-                adapter.getTotalPrice()+"","",orderItemModels
+                (int)itemModel.getTotalPrice()+"","",orderItemModels
         );
 
 
@@ -122,8 +122,8 @@ public class ShoppingCartActivity extends AppCompatActivity implements ShoppingC
                     Integer.parseInt(itemModel.getItemId()),
                     Integer.parseInt(itemModel.getCategoryId()),
                     (int)(itemModel.getNumberOfItems()),
-                    itemModel.getTotalPrice()/itemModel.getNumberOfItems()+"",
-                    itemModel.getTotalPrice()+""
+                    (int)(itemModel.getTotalPrice()/itemModel.getNumberOfItems())+"",
+                    (int)itemModel.getTotalPrice()+""
             ));
             vendorId=Integer.parseInt(itemModel.getVendorId());
         }
@@ -133,7 +133,7 @@ public class ShoppingCartActivity extends AppCompatActivity implements ShoppingC
                 userid,vendorId,
                 Integer.parseInt(VendorShopModel.instance.getVendorUserId()),
                 LocalDateTime.now(),LocalDateTime.now(),
-                adapter.getTotalPrice()+"","",orders
+                (int)adapter.getTotalPrice()+"","",orders
         );
 
 

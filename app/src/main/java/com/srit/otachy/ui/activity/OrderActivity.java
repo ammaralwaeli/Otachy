@@ -139,11 +139,7 @@ public class OrderActivity extends AppCompatActivity {
         DataService service = BackendHelper.INSTANCE.getRetrofitWithAuth()
                 .create(DataService.class);
 
-
-
-
         repository=new ShoppingCartRepository(this);
-
 
         service.addOrder(orderModel)
                 .enqueue(new BackendCallBack<String>() {

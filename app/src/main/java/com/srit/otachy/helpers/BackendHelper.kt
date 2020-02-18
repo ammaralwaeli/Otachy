@@ -9,6 +9,7 @@ import org.threeten.bp.LocalDateTime
 import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.nio.charset.StandardCharsets
 
 
@@ -22,6 +23,7 @@ object BackendHelper {
 
     private val mBuilder = Retrofit.Builder()
         .baseUrl(API_BASE_URL)
+        .addConverterFactory(ScalarsConverterFactory.create())
         .addConverterFactory(
             GsonConverterFactory.create(gson)
         )
