@@ -26,7 +26,7 @@ data class  ShoppingCartItemModel(
 
 @Parcelize
 @Entity(primaryKeys = ["vendorId"])
-data class  VendorShopModel(
+data class  VendorShopModel (
     val vendorId: Int,
     val vendorName: String,
     val vendorCity: String,
@@ -36,7 +36,6 @@ data class  VendorShopModel(
     companion object Instance{
         lateinit var instance:VendorShopModel
     }
-
     override fun toString(): String {
         return "VendorShopModel(vendorId=$vendorId, vendorName='$vendorName', vendorCity='$vendorCity', vendorUserId='$vendorUserId', homeRecieve=$homeRecieve)"
     }

@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-import com.haytham.coder.otchy.adapters.recyclerAdapter.VendorRecyclerAdapter;
+import com.srit.otachy.adapters.recyclerAdapter.VendorRecyclerAdapter;
 import com.srit.otachy.R;
 import com.srit.otachy.database.api.BackendCallBack;
 import com.srit.otachy.database.api.DataService;
@@ -61,7 +61,6 @@ public class HomeActivity extends AppCompatActivity
         Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.home));
 
 
-
         binding.searchCity.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -95,9 +94,13 @@ public class HomeActivity extends AppCompatActivity
     }
 
     private void shop() {
-        VendorDialog vendorDialog=new VendorDialog();
+        VendorDialog vendorDialog = VendorDialog.newInstance(this);
+        if (vendorDialog.getAdapterItemCount() == 0) {
+            ViewExtensionsKt.showSnackBar(binding.contentLayoutHome, getString(R.string.noVendorItem), true);
+            return;
+        }
         vendorDialog.setListener(this);
-        vendorDialog.show(getSupportFragmentManager(),"");
+        vendorDialog.show(getSupportFragmentManager(), "");
     }
 
 
@@ -118,6 +121,9 @@ public class HomeActivity extends AppCompatActivity
             case R.id.filter:
                 filter();
                 break;
+            case R.id.logout:
+                Logout.logout(this);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -127,8 +133,8 @@ public class HomeActivity extends AppCompatActivity
                 .create(DataService.class);
 
         String gov = UserModel.getInstance(SharedPrefHelper.getInstance().getAccessToken()).getGovernment();
-        if(filter){
-            gov=this.selectedGov;
+        if (filter) {
+            gov = this.selectedGov;
         }
 
         service.getVendors(gov)
@@ -136,11 +142,10 @@ public class HomeActivity extends AppCompatActivity
                     @Override
                     public void onSuccess(List<VendorModel> result) {
                         adapter = new VendorRecyclerAdapter(result);
-                        if(adapter.getItemCount()==0){
+                        if (adapter.getItemCount() == 0) {
                             binding.errorText.setVisibility(View.VISIBLE);
                             binding.errorText.setText(R.string.noVendors);
-                        }
-                        else {
+                        } else {
                             binding.errorText.setVisibility(View.GONE);
                             binding.errorText.setText("");
                         }
@@ -151,8 +156,8 @@ public class HomeActivity extends AppCompatActivity
 
                     @Override
                     public void onError(int code, String msg) {
-                        if(code==401){
-                            Logout.expireToken(binding.contentLayoutHome,HomeActivity.this);
+                        if (code == 401) {
+                            Logout.expireToken(binding.contentLayoutHome, HomeActivity.this);
                         }
                         binding.progressIndicator2.setVisibility(View.GONE);
                         binding.errorText.setVisibility(View.VISIBLE);
@@ -176,10 +181,10 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public void onFinishEditDialog(String inputText) {
         //Toast.makeText(this, inputText, Toast.LENGTH_LONG).show();
-        if(inputText.equals("جميع المحافظات")){
-            this.selectedGov=null;
+        if (inputText.equals("جميع المحافظات")) {
+            this.selectedGov = null;
 
-        }else {
+        } else {
             this.selectedGov = inputText;
         }
         binding.progressIndicator2.setVisibility(View.VISIBLE);
@@ -191,17 +196,21 @@ public class HomeActivity extends AppCompatActivity
     public void onItemClick(@NotNull VendorModel itemModel) {
 
         VendorModel.setInstance(itemModel);
-        Toast.makeText(this, itemModel.getUser().getId()+"", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, itemModel.getUser().getId() + "", Toast.LENGTH_LONG).show();
         CatigoryActivity.newInstance(this);
     }
 
 
     @Override
     public void onFinishEditDialog(VendorShopModel inputText) {
-        VendorShopModel.instance=inputText;
+        VendorShopModel.instance = inputText;
         ShoppingCartActivity.newInstance(this);
         Toast.makeText(this, inputText.toString(), Toast.LENGTH_LONG).show();
     }
 
 
+    @Override
+    public void onBackPressed() {
+        finishAffinity();
+    }
 }

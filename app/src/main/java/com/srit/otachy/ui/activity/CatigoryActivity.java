@@ -12,7 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.haytham.coder.otchy.adapters.recyclerAdapter.CategoryRecyclerAdapter;
+import com.srit.otachy.adapters.recyclerAdapter.CategoryRecyclerAdapter;
 import com.srit.otachy.R;
 import com.srit.otachy.database.api.BackendCallBack;
 import com.srit.otachy.database.api.DataService;
@@ -22,6 +22,7 @@ import com.srit.otachy.database.models.VendorModel;
 import com.srit.otachy.database.models.VendorShopModel;
 import com.srit.otachy.databinding.ActivityCatigoryBinding;
 import com.srit.otachy.helpers.BackendHelper;
+import com.srit.otachy.helpers.ViewExtensionsKt;
 import com.srit.otachy.ui.Logout;
 import com.srit.otachy.ui.widgets.VendorDialog;
 
@@ -110,17 +111,18 @@ public class CatigoryActivity extends AppCompatActivity implements CategoryRecyc
     }
 
     private void shop() {
-        VendorDialog vendorDialog=new VendorDialog();
+        VendorDialog vendorDialog=VendorDialog.newInstance(this);
+        if(vendorDialog.getAdapterItemCount()==0){
+            ViewExtensionsKt.showSnackBar(binding.contentLayoutCat,getString(R.string.noVendorItem),true);
+            return;
+        }
         vendorDialog.setListener(this);
         vendorDialog.show(getSupportFragmentManager(),"");
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.shoppingCartMenuItem1:
-                shop();
-                break;
-            case R.id.filter:
+        if (item.getItemId() == R.id.shoppingCartMenuItem1) {
+            shop();
         }
         return super.onOptionsItemSelected(item);
     }

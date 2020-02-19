@@ -9,15 +9,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.lifecycle.Observer;
 
-import com.haytham.coder.otchy.adapters.recyclerAdapter.GovernmentRecyclerAdapter;
-import com.haytham.coder.otchy.adapters.recyclerAdapter.VendorRecyclerAdapter;
-import com.haytham.coder.otchy.adapters.recyclerAdapter.VendorShopRecyclerAdapter;
+import com.srit.otachy.adapters.recyclerAdapter.VendorShopRecyclerAdapter;
 import com.srit.otachy.database.local.VendorShopRepository;
-import com.srit.otachy.database.models.VendorModel;
 import com.srit.otachy.database.models.VendorShopModel;
-import com.srit.otachy.databinding.GovernmentDialogBinding;
 import com.srit.otachy.databinding.VendorDialogBinding;
 
 import java.util.ArrayList;
@@ -37,25 +32,28 @@ public class VendorDialog extends DialogFragment implements VendorShopRecyclerAd
     VendorShopRecyclerAdapter adapter;
 
 
+    public int getAdapterItemCount(){
+        return adapter.getItemCount();
+    }
 
-    public static VendorDialog newInstance() {
+    public static VendorDialog newInstance(Context context) {
         VendorDialog frag = new VendorDialog();
         Bundle args = new Bundle();
         frag.setArguments(args);
+        frag.loadVendors(context);
         return frag;
     }
 
 
 
-    private void loadVendors() {
+    private void loadVendors(Context context) {
 
-        Context context=getContext();
         VendorShopRepository repository=new VendorShopRepository(context);
 
         List<VendorShopModel> vendorShopModel=repository.getItems();
         adapter=new VendorShopRecyclerAdapter(vendorShopModel);
 
-        binding.vendorRecyclerView.setAdapter(adapter);
+
 
     }
 
@@ -74,8 +72,8 @@ public class VendorDialog extends DialogFragment implements VendorShopRecyclerAd
 
 
         binding = VendorDialogBinding.inflate(inflater,container,false);
-        loadVendors();
-
+        //loadVendors();
+        binding.vendorRecyclerView.setAdapter(adapter);
         adapter.setItemListener(this);
         return binding.getRoot();
     }

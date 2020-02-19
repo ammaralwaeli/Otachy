@@ -15,10 +15,11 @@ import android.widget.Toast;
 import com.srit.otachy.database.models.CategotyModel;
 import com.srit.otachy.database.models.VendorModel;
 import com.srit.otachy.database.models.VendorShopModel;
+import com.srit.otachy.helpers.ViewExtensionsKt;
 import com.srit.otachy.ui.Logout;
 import com.srit.otachy.ui.widgets.OrderBottomSheet;
 
-import com.haytham.coder.otchy.adapters.recyclerAdapter.ServiceRecyclerAdapter;
+import com.srit.otachy.adapters.recyclerAdapter.ServiceRecyclerAdapter;
 import com.srit.otachy.R;
 import com.srit.otachy.database.api.BackendCallBack;
 import com.srit.otachy.database.api.DataService;
@@ -42,6 +43,7 @@ public class ItemActivity extends AppCompatActivity implements ServiceRecyclerAd
 
     int catID,userid;
 
+
     public static void newInstance(Context context) {
 
         Intent in = new Intent(context, ItemActivity.class);
@@ -49,7 +51,11 @@ public class ItemActivity extends AppCompatActivity implements ServiceRecyclerAd
     }
 
     private void shop() {
-        VendorDialog vendorDialog=VendorDialog.newInstance();
+        VendorDialog vendorDialog=VendorDialog.newInstance(this);
+        if(vendorDialog.getAdapterItemCount()==0){
+            ViewExtensionsKt.showSnackBar(binding.contentLayoutItem,getString(R.string.noVendorItem),true);
+            return;
+        }
         vendorDialog.setListener(this);
         vendorDialog.show(getSupportFragmentManager(),"");
     }

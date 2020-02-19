@@ -17,7 +17,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.haytham.coder.otchy.adapters.recyclerAdapter.GovernmentRecyclerAdapter;
+import com.srit.otachy.adapters.recyclerAdapter.GovernmentRecyclerAdapter;
 import com.srit.otachy.R;
 import com.srit.otachy.databinding.GovernmentDialogBinding;
 

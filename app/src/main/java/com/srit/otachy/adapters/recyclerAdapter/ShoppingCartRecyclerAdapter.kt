@@ -1,4 +1,4 @@
-package com.haytham.coder.otchy.adapters.recyclerAdapter
+package com.srit.otachy.adapters.recyclerAdapter
 
 
 import android.view.LayoutInflater

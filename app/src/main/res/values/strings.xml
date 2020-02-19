@@ -84,4 +84,7 @@
     <string name="noServoces">لا توجد خدمات لهذا المحل</string>
     <string name="noCategories">لا توجد تصنيفات لهذا المحل</string>
     <string name="services">الخدمات</string>
+    <string name="order_sent">تم الطلب بنجاح</string>
+    <string name="after_date">يجب ان يكون تاريخ التسليم قبل تاريخ الاستلام</string>
+    <string name="noVendorItem">لا توجد طلبات في السلة</string>
 </resources>
