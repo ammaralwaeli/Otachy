@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import com.srit.otachy.adapters.recyclerAdapter.ShoppingCartRecyclerAdapter;
 import com.srit.otachy.R;
@@ -106,7 +105,6 @@ public class ShoppingCartActivity extends AppCompatActivity implements ShoppingC
         );
 
 
-        Toast.makeText(this, order.toString(), Toast.LENGTH_SHORT).show();
 
         OrderModel.setInstance(order);
 

@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.srit.otachy.adapters.recyclerAdapter.ServiceRecyclerAdapter;
 import com.srit.otachy.R;
@@ -105,7 +104,6 @@ public class OrderActivity extends AppCompatActivity {
                     public void onDateSet(DatePicker view, int year,
                                           int monthOfYear, int dayOfMonth) {
                         date = LocalDate.of(year, monthOfYear + 1, dayOfMonth);
-                        Toast.makeText(OrderActivity.this, dayOfMonth + "-" + (monthOfYear + 1) + "-" + year, Toast.LENGTH_SHORT).show();
                         showTimePicker(sendTimeEditText);
                     }
                 }, mYear, mMonth, mDay);
@@ -126,7 +124,6 @@ public class OrderActivity extends AppCompatActivity {
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
                         time = LocalTime.of(hourOfDay, minute);
-                        Toast.makeText(OrderActivity.this, hourOfDay + ":" + minute, Toast.LENGTH_SHORT).show();
                         dateTime = LocalDateTime.of(date, time);
                         if (sendTimeEditText) {
                             ByBindingAdapterKt.setTextFromDate(binding.sendTimeEditText, dateTime);
@@ -160,7 +157,6 @@ public class OrderActivity extends AppCompatActivity {
         orderModel.setReceiveDate(reciveDate);
         orderModel.setDescrition(binding.orderDescriptionEditText.getText().toString());
         sendOrder(orderModel);
-        //Toast.makeText(this,orderModel.toString(),Toast.LENGTH_LONG).show();
     }
 
     private void sendOrder(OrderModel orderModel) {

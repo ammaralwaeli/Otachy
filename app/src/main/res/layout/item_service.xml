@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mine="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -28,7 +29,7 @@
             android:layout_weight="1"
             android:gravity="center"
             tools:text="2,000"
-            android:price="@{serviceItemModel.price}"
+            mine:setEnglishPrice="@{serviceItemModel.price}"
             />
 
         <View

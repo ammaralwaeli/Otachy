@@ -2,7 +2,6 @@ package com.srit.otachy.database.local
 
 import android.content.Context
 import android.os.AsyncTask
-import android.widget.Toast
 import com.srit.otachy.database.models.ShoppingCartItemModel
 import java.lang.Exception
 
@@ -32,13 +31,11 @@ class ShoppingCartRepository(context: Context) {
 
                 InsertShoppingCartItemsAsyncTask(dao).execute(newItem)
                 updated = true
-                Toast.makeText(ctx, "updated", Toast.LENGTH_LONG).show()
                 break
             }
         }
         if (!updated) {
             InsertShoppingCartItemsAsyncTask(dao).execute(*items)
-            Toast.makeText(ctx, "inserted", Toast.LENGTH_LONG).show()
         }
     }
 

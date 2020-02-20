@@ -13,6 +13,7 @@ import com.tiper.MaterialSpinner
 import org.threeten.bp.LocalDateTime
 import java.lang.Exception
 import java.text.DecimalFormat
+import java.util.*
 
 
 @BindingAdapter("android:price")
@@ -36,9 +37,9 @@ fun setTextFromDate(textView: TextView, date: LocalDateTime?) {
     }
 
 }
-
-fun getTextFromDate(date: LocalDateTime?): String? {
-    return date?.toString()
+@BindingAdapter("mine:setEnglishPrice")
+fun setPriceEnglish(textView: TextView, price: Double) {
+    textView.text=String.format(Locale.ENGLISH, "%s", DecimalFormat("#,###").format(price))
 }
 
 @BindingAdapter("android:priceTxt")

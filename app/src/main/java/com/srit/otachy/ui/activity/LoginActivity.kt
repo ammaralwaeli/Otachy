@@ -40,6 +40,10 @@ class LoginActivity : AppCompatActivity(){
 
         if(SharedPrefHelper.getInstance().accessToken!=null){
             HomeActivity.newInstance(this)
+            finish()
+        }else if(SharedPrefHelper.getInstance().isRegister){
+            RegisterActivity.newInstance(this)
+            finish()
         }
 
         Glide
@@ -50,6 +54,7 @@ class LoginActivity : AppCompatActivity(){
         animateAlpha()
         binding.newLogin.setOnClickListener {
             RegisterActivity.newInstance(this)
+            SharedPrefHelper.getInstance().isRegister=true
         }
 
 

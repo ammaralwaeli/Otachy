@@ -8,7 +8,6 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -196,7 +195,6 @@ public class HomeActivity extends AppCompatActivity
     public void onItemClick(@NotNull VendorModel itemModel) {
 
         VendorModel.setInstance(itemModel);
-        Toast.makeText(this, itemModel.getUser().getId() + "", Toast.LENGTH_LONG).show();
         CatigoryActivity.newInstance(this);
     }
 
@@ -205,7 +203,6 @@ public class HomeActivity extends AppCompatActivity
     public void onFinishEditDialog(VendorShopModel inputText) {
         VendorShopModel.instance = inputText;
         ShoppingCartActivity.newInstance(this);
-        Toast.makeText(this, inputText.toString(), Toast.LENGTH_LONG).show();
     }
 
 

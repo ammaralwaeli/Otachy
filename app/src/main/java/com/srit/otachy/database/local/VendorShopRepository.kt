@@ -2,7 +2,6 @@ package com.srit.otachy.database.local
 
 import android.content.Context
 import android.os.AsyncTask
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import com.srit.otachy.database.models.VendorShopModel
 
@@ -16,7 +15,6 @@ class VendorShopRepository(context: Context){
 
     fun insertItems(vararg items: VendorShopModel){
         InsertVendorShopItemsAsyncTask(dao).execute(*items)
-        Toast.makeText(ctx,"inserted",Toast.LENGTH_LONG).show()
     }
 
     fun getItems(): List<VendorShopModel>{

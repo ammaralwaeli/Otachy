@@ -1,31 +1,18 @@
 package com.srit.otachy.ui.widgets;
 
-import android.app.ActionBar;
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.srit.otachy.adapters.recyclerAdapter.GovernmentRecyclerAdapter;
-import com.srit.otachy.R;
 import com.srit.otachy.databinding.GovernmentDialogBinding;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
-
-import static com.srit.otachy.adapters.ByBindingAdapterKt.setSpinnerList;
 
 public class GovernmentDialog extends DialogFragment implements GovernmentRecyclerAdapter.ItemListener {
 

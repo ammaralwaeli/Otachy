@@ -137,6 +137,5 @@ public class CatigoryActivity extends AppCompatActivity implements CategoryRecyc
     public void onFinishEditDialog(VendorShopModel inputText) {
         VendorShopModel.instance=inputText;
         ShoppingCartActivity.newInstance(this);
-        Toast.makeText(this, inputText.toString(), Toast.LENGTH_LONG).show();
     }
 }

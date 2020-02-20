@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.srit.otachy.database.models.CategotyModel;
 import com.srit.otachy.database.models.VendorModel;
@@ -149,6 +148,5 @@ public class ItemActivity extends AppCompatActivity implements ServiceRecyclerAd
     public void onFinishEditDialog(VendorShopModel inputText) {
         VendorShopModel.instance=inputText;
         ShoppingCartActivity.newInstance(this);
-        Toast.makeText(this, "Ammar", Toast.LENGTH_LONG).show();
     }
 }

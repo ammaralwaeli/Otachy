@@ -15,7 +15,7 @@ import java.nio.charset.StandardCharsets
 
 object BackendHelper {
     const val IMAGE_URL = "https://23.238.35.18:5400/api/"
-    const val API_BASE_URL = "http://23.238.35.18:5400/"
+    const val API_BASE_URL = "http://23.238.35.18:5400"
     val gson = GsonBuilder()// TODO: set date format
         .setLenient()
         .registerTypeAdapter(LocalDateTime::class.java,LocalDateTimeConverter())

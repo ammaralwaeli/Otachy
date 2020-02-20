@@ -3,15 +3,14 @@ package com.srit.otachy.helpers;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import static com.srit.otachy.helpers.Apps.BUTCHER;
-import static com.srit.otachy.helpers.Apps.OTCHY;
 
 public class SharedPrefHelper {
     private static SharedPrefHelper instance;
 
     private static String PREF_NAME = "mySettingsPref";
     private static String ACCESS_TOKEN = "ACCESS_TOKEN";
-    private static String APP_TYPE = "APP_TYPE";
+    private static String IS_REGISTER = "IS_REGISTER";
+    private static String IS_VERIFICATION = "IS_VERIFICATION";
 
     public static void init(Context context) {
         instance= new SharedPrefHelper(context);
@@ -29,6 +28,23 @@ public class SharedPrefHelper {
         mSharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
     }
 
+
+    public boolean getIsRegister() {
+        return mSharedPreferences.getBoolean(IS_REGISTER,false);
+    }
+
+    public void setIsRegister(boolean isRegister) {
+        mSharedPreferences.edit().putBoolean(IS_REGISTER, isRegister).apply();
+    }
+
+    public boolean getIsVerification() {
+        return mSharedPreferences.getBoolean(IS_VERIFICATION,false);
+    }
+
+    public void setIsVerification(boolean isVerification) {
+        mSharedPreferences.edit().putBoolean(IS_VERIFICATION, isVerification).apply();
+    }
+
     public String getAccessToken(){
         return mSharedPreferences.getString(ACCESS_TOKEN, null);
     }
@@ -37,26 +53,4 @@ public class SharedPrefHelper {
         mSharedPreferences.edit().putString(ACCESS_TOKEN, accessToken).apply();
     }
 
-    public Apps getAppType(){
-
-        switch (mSharedPreferences.getInt(APP_TYPE,0)){
-            case 0:return OTCHY;
-            case 1:return BUTCHER;
-        }
-        return null;
-    }
-
-    public void setAppType(Apps appType){
-        int x;
-        switch (appType){
-            case OTCHY:x=0;
-                mSharedPreferences.edit().putInt(APP_TYPE, x).apply();
-                break;
-            case BUTCHER:x=1;
-                mSharedPreferences.edit().putInt(APP_TYPE, x).apply();
-                break;
-
-        }
-
-    }
 }

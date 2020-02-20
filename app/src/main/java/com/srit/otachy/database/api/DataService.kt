@@ -8,43 +8,43 @@ import retrofit2.http.*
 
 interface DataService{
 
-    @POST("api/account/loginUser")
+    @POST("/api/account/loginUser")
     fun login(
         @Body loginModel: LoginModel
     ): Call<JsonObject>
 
 
-    @POST("api/account/registerUser")
+    @POST("/api/account/registerUser")
     fun register(
         @Body registerModel: RegisterModel
     ): Call<JsonObject>
 
 
-    @POST("api/account/verify")
+    @POST("/api/account/verify")
     fun verify(
         @Body verificateionModel: VerificateionModel
     ): Call<String>
 
     //@HTTP(method = "GET", path = "vendor/getVendors", hasBody = true)
-    @GET("api/vendor/getVendors")
+    @GET("/api/vendor/getVendors")
     fun getVendors(
         @Query("government") government:String
     ): Call<List<VendorModel>>
 
 
-    @GET("api/category/getUserCategories")
+    @GET("/api/category/getUserCategories")
     fun getUserCategories(
         @Query("userId") userId:Int
     ): Call<List<UserCategories>>
 
-    @GET("api/items/getUserItems")
+    @GET("/api/items/getUserItems")
     fun getUserItems(
         @Query("UserId") userId:Int,
         @Query("CategoryId") categoryId:Int
     ): Call<List<ServiceModel>>
 
 
-    @POST("api/orders/addOrder")
+    @POST("/api/orders/addOrder")
     fun addOrder(
        @Body order:OrderModel
     ): Call<String>

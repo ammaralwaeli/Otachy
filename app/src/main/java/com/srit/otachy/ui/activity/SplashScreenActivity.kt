@@ -82,6 +82,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
         val intent = Intent(this@SplashScreenActivity, LoginActivity::class.java)
         startActivity(intent, activityOptionsCompat.toBundle())
+        finish()
     }
 
     private fun appLevelInitialization() {

@@ -6,7 +6,6 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -87,12 +86,10 @@ public class RegisterActivity extends AppCompatActivity {
         client.startSmsUserConsent(PHONE_NUMBER).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Toast.makeText(getApplicationContext(), "On Success", Toast.LENGTH_LONG).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), "On OnFailure", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -178,12 +175,18 @@ public class RegisterActivity extends AppCompatActivity {
         loadGovs();
         verificate = false;
         code = -1;
-        showRegisterLayout();
+        if(SharedPrefHelper.getInstance().getIsVerification()){
+            showVerifyLayout();
+        }else {
+            showRegisterLayout();
+        }
         //startSmsUserConsent();
         binding.newRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 LoginActivity.Factory.newInstance(RegisterActivity.this);
+                SharedPrefHelper.getInstance().setIsRegister(false);
+                finish();
             }
         });
         binding.governorate.setOnItemSelectedListener(new MaterialSpinner.
@@ -286,6 +289,7 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(JsonObject result) {
                         showVerifyLayout();
+                        SharedPrefHelper.getInstance().setIsVerification(true);
                         startSmsUserConsent();
                         RegisterActivity.this.phone=binding.phoneNumber.getText().toString();
                         RegisterActivity.this.password=binding.pass.getText().toString();
@@ -344,6 +348,7 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onSuccess(JsonObject result) {
                         //Toast.makeText(RegisterActivity.this, result, Toast.LENGTH_LONG).show();
                         binding.progressIndicator.setVisibility(View.GONE);
+                        SharedPrefHelper.getInstance().setIsVerification(false);
                         String access=result.get("jwt").getAsString();
                         SharedPrefHelper.getInstance().setAccessToken(access);
                         HomeActivity.newInstance(RegisterActivity.this);
@@ -397,8 +402,6 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onError(int code, String msg) {
                         binding.progressIndicator.setVisibility(View.GONE);
-                        Toast.makeText(RegisterActivity.this, msg + "  " + code,
-                                Toast.LENGTH_LONG).show();
                         binding.verifyButton.setText(getString(R.string.verify));
                     }
 
