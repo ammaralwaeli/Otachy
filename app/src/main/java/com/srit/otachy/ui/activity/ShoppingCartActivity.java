@@ -80,6 +80,10 @@ public class ShoppingCartActivity extends AppCompatActivity implements ShoppingC
     public void onItemDelete(@NotNull ShoppingCartItemModel itemModel) {
         repository.deleteItems(itemModel);
         updateAdapter();
+        if(adapter.getItemCount()==0){
+            new VendorShopRepository(this).deleteItems(VendorShopModel.instance);
+            finish();
+        }
     }
 
     @Override

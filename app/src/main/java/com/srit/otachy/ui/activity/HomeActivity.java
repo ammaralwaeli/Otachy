@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +19,7 @@ import com.srit.otachy.adapters.recyclerAdapter.VendorRecyclerAdapter;
 import com.srit.otachy.R;
 import com.srit.otachy.database.api.BackendCallBack;
 import com.srit.otachy.database.api.DataService;
+import com.srit.otachy.database.local.VendorShopRepository;
 import com.srit.otachy.database.models.UserModel;
 import com.srit.otachy.database.models.VendorModel;
 import com.srit.otachy.database.models.VendorShopModel;
@@ -56,10 +59,15 @@ public class HomeActivity extends AppCompatActivity
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home);
         binding.progressIndicator2.setVisibility(View.VISIBLE);
         loadVendors(false);
-        setSupportActionBar(binding.toolbar.toolbar);
+        setSupportActionBar(binding.toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.home));
 
-
+        binding.logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Logout.logout(HomeActivity.this);
+            }
+        });
         binding.searchCity.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -119,9 +127,6 @@ public class HomeActivity extends AppCompatActivity
                 break;
             case R.id.filter:
                 filter();
-                break;
-            case R.id.logout:
-                Logout.logout(this);
                 break;
         }
         return super.onOptionsItemSelected(item);

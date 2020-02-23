@@ -55,8 +55,8 @@ class ShoppingCartRecyclerAdapter:
         return count
     }
 
-    fun getTotalPrice():Double{
-        var count=0.0
+    fun getTotalPrice():Int{
+        var count=0
         for(item in dataList){
             count += item.totalPrice
         }

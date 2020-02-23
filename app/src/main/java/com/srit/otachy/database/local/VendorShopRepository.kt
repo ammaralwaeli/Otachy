@@ -2,7 +2,6 @@ package com.srit.otachy.database.local
 
 import android.content.Context
 import android.os.AsyncTask
-import androidx.lifecycle.LiveData
 import com.srit.otachy.database.models.VendorShopModel
 
 
@@ -36,7 +35,7 @@ class DeleteVendorShopItemsAsyncTask (private val dao:ShoppingCartDao)
     : AsyncTask<VendorShopModel, Void, Void>() {
 
     override fun doInBackground(vararg params: VendorShopModel): Void? {
-        dao.deleteItems(*params)
+        dao.deleteVendors(*params)
         return null
     }
 }

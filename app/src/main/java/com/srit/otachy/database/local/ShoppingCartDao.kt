@@ -12,7 +12,7 @@ interface ShoppingCartDao{
 
     // delete uses the primary key to delete items
     @Delete
-    fun deleteItems(vararg cartItems: ShoppingCartItemModel)
+    fun deleteVendors(vararg cartItems: ShoppingCartItemModel)
 
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -20,11 +20,15 @@ interface ShoppingCartDao{
 
     // delete uses the primary key to delete items
     @Delete
-    fun deleteItems(vararg cartItems: VendorShopModel)
+    fun deleteVendors(vararg cartItems: VendorShopModel)
 
 
     @Query("SELECT * FROM shoppingCartItemModel WHERE shoppingCartItemModel.vendorId=:vendorId")
     fun getItems(vendorId:Int): List<ShoppingCartItemModel>
+
+
+    @Query("SELECT * FROM shoppingCartItemModel WHERE shoppingCartItemModel.vendorId=:vendorId AND shoppingCartItemModel.categoryId=:categoryId")
+    fun getItemsByCategoryId(vendorId:Int,categoryId:Int): List<ShoppingCartItemModel>
 
 
     @Query("SELECT * FROM vendorShopModel")

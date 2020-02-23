@@ -7,7 +7,7 @@ import java.io.Serializable;
 public class ServiceModel implements Serializable {
 
 	private int id;
-	private double price;
+	private int price;
 	private ItemModel item;
 
 	private static ServiceModel instance;
@@ -28,7 +28,7 @@ public class ServiceModel implements Serializable {
 		return item;
 	}
 
-	public double getPrice(){
+	public int getPrice(){
 		return price;
 	}
 

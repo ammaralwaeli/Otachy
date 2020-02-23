@@ -16,10 +16,5 @@
     app:showAsAction="ifRoom"
     tools:ignore="AppCompatResource"/>
 
-    <item android:id="@+id/logout"
-        android:icon="@drawable/ic_logout"
-        android:title="@string/log_out"
-        app:showAsAction="ifRoom"
-        tools:ignore="AppCompatResource"/>
 
 </menu>

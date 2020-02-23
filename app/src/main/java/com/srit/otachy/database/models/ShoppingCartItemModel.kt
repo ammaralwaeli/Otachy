@@ -10,10 +10,10 @@ data class  ShoppingCartItemModel(
     val itemId: String,
     val vendorId: String,
     val itemName: String,
-    val totalPrice: Double,
+    val totalPrice: Int,
     val categoryId: String,
     val categoryName: String,
-    val numberOfItems: Double
+    val numberOfItems: Int
 ) : Parcelable {
     companion object Instance{
         lateinit var instance:ShoppingCartItemModel

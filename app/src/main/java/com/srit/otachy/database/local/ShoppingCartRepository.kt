@@ -18,7 +18,7 @@ class ShoppingCartRepository(context: Context) {
         var updated = false
         for (item in getItems(items[0].vendorId.toInt())) {
 
-            if (item.itemId == items[0].itemId) {
+            if (item.itemId == items[0].itemId && item.categoryId == items[0].categoryId) {
                 val newItem = ShoppingCartItemModel(
                     item.itemId,
                     item.vendorId,
@@ -55,7 +55,7 @@ class DeleteShoppingCartItemsAsyncTask(private val dao: ShoppingCartDao) :
     AsyncTask<ShoppingCartItemModel, Void, Void>() {
 
     override fun doInBackground(vararg params: ShoppingCartItemModel): Void? {
-        dao.deleteItems(*params)
+        dao.deleteVendors(*params)
         return null
     }
 }

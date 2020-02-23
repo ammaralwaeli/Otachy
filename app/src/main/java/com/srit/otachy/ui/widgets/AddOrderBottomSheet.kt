@@ -14,8 +14,8 @@ import com.srit.otachy.database.models.*
 
 class OrderBottomSheet : BottomSheetDialogFragment() {
     private lateinit var binding: BottomSheetAddOrderBinding
-    private var numOfItems: Double = 1.0
-    private var totalPrice: Double = 0.0
+    private var numOfItems: Int = 1
+    private var totalPrice: Int = 0
 
     companion object Factory {
 
@@ -56,7 +56,7 @@ class OrderBottomSheet : BottomSheetDialogFragment() {
 
         binding.decreaseBtn.setOnClickListener {
             numOfItems -= 1
-            if (numOfItems < 1) numOfItems = 1.0
+            if (numOfItems < 1) numOfItems = 1
 
             reCalculateTotalPrice()
         }

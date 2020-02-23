@@ -92,29 +92,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/phone_number"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/bahij_the_sans_arabic_bold" />
-
-                <EditText
-                    android:id="@+id/phoneNumberEditText"
-                    android:elevation="2dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/phone_number"
-                    android:gravity="center"
-                    android:padding="12dp"
-                    android:textAlignment="center"
-                    android:textSize="14sp"
-                    android:layout_marginBottom="16dp"
-                    android:inputType="phone"
-                    android:fontFamily="@font/bahij_the_sans_arabic_semi_light"
-                    android:background="@drawable/bg_edit_text" />
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:text="@string/order_description"
                     android:textSize="16sp"
                     android:fontFamily="@font/bahij_the_sans_arabic_bold" />

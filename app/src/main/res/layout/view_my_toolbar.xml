@@ -24,5 +24,6 @@
             android:layout_gravity="center"
             style="@style/toolbarTextViewStyle" />
 
+
     </androidx.appcompat.widget.Toolbar>
 </layout>

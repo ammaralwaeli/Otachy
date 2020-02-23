@@ -25,6 +25,7 @@
             android:layout_height="0dp"
             android:layout_marginTop="64dp"
             android:layout_weight="1"
+            android:elevation="5dp"
             android:contentDescription="@string/app_logo"
             android:transitionName="@string/logo_trans"
             app:layout_constraintBottom_toTopOf="@+id/guideline2"
@@ -33,7 +34,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0"
-            tools:src="@drawable/ic_launcher" />
+            tools:src="@drawable/logo_with_name" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline2"

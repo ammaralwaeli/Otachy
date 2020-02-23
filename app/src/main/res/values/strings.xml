@@ -87,4 +87,5 @@
     <string name="order_sent">تم الطلب بنجاح</string>
     <string name="after_date">يجب ان يكون تاريخ التسليم قبل تاريخ الاستلام</string>
     <string name="noVendorItem">لا توجد طلبات في السلة</string>
+    <string name="cant_set_old_date">لا يمكن اختيار تاريخ قديم</string>
 </resources>

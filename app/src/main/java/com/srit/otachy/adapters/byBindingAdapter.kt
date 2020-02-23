@@ -17,13 +17,13 @@ import java.util.*
 
 
 @BindingAdapter("android:price")
-fun setFormattedPrice(textView: TextView, price: Double) {
+fun setFormattedPrice(textView: TextView, price: Int) {
     val formattedPrice = DecimalFormat("#,###").format(price)
     textView.text = formattedPrice
 }
 
 @BindingAdapter("android:pieces")
-fun setPieces(textView: TextView, pieces: Double) {
+fun setPieces(textView: TextView, pieces: Int) {
     textView.text = "$pieces ${textView.context.resources.getString(R.string.pieces)}"
 }
 
@@ -38,21 +38,16 @@ fun setTextFromDate(textView: TextView, date: LocalDateTime?) {
 
 }
 @BindingAdapter("mine:setEnglishPrice")
-fun setPriceEnglish(textView: TextView, price: Double) {
+fun setPriceEnglish(textView: TextView, price: Int) {
     textView.text=String.format(Locale.ENGLISH, "%s", DecimalFormat("#,###").format(price))
 }
 
 @BindingAdapter("android:priceTxt")
-fun setFormattedPriceTxt(textView: TextView, price: Double) {
+fun setFormattedPriceTxt(textView: TextView, price: Int) {
 
+        val p=String.format(Locale.ENGLISH, "%s", DecimalFormat("#,###").format(price))
+        textView.text = "$p ${textView.context.resources.getString(R.string.thousand)}"
 
-    if ((price - price.toInt()) == 0.0) {
-        textView.text =
-            "${price.toInt()} ${textView.context.resources.getString(R.string.thousand)}"
-
-    } else {
-        textView.text = "$price ${textView.context.resources.getString(R.string.thousand)}"
-    }
 
 }
 

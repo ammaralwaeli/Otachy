@@ -125,10 +125,15 @@ public class OrderActivity extends AppCompatActivity {
                                           int minute) {
                         time = LocalTime.of(hourOfDay, minute);
                         dateTime = LocalDateTime.of(date, time);
+
                         if (sendTimeEditText) {
-                            ByBindingAdapterKt.setTextFromDate(binding.sendTimeEditText, dateTime);
-                            sendDate = dateTime;
-                            //binding.sendTimeEditText.setText(dateTime.toString());
+                            if(dateTime.isBefore(LocalDateTime.now())){
+                                ViewExtensionsKt.showSnackBar(binding.layout,getString(R.string.cant_set_old_date),true);
+                            }else {
+                                ByBindingAdapterKt.setTextFromDate(binding.sendTimeEditText, dateTime);
+                                sendDate = dateTime;
+                                //binding.sendTimeEditText.setText(dateTime.toString());
+                            }
                         } else {
                             ByBindingAdapterKt.setTextFromDate(binding.receiveTimeEditText, dateTime);
                             reciveDate = dateTime;
@@ -152,6 +157,7 @@ public class OrderActivity extends AppCompatActivity {
             return;
         }
         binding.progressIndicator.setVisibility(View.VISIBLE);
+        binding.orderBtn.setText("");
         OrderModel orderModel = OrderModel.getInstance();
         orderModel.setDeleverDate(sendDate);
         orderModel.setReceiveDate(reciveDate);
@@ -175,6 +181,7 @@ public class OrderActivity extends AppCompatActivity {
                             for (ShoppingCartItemModel item : ShoppingCartItemModel.orders) {
                                 repository.deleteItems(item);
                             }
+                            //new VendorShopRepository(OrderActivity.this).deleteItems(VendorShopModel.instance);
                             vendorShopRepository.deleteItems(VendorShopModel.instance);
                             finish();
                         }
@@ -186,6 +193,7 @@ public class OrderActivity extends AppCompatActivity {
                         if (code == 401) {
                             Logout.expireToken(binding.layout, OrderActivity.this);
                         }
+                        binding.orderBtn.setText(getString(R.string.order));
                         binding.progressIndicator.setVisibility(View.GONE);
                         ViewExtensionsKt.showSnackBar(binding.layout, msg + "  " + code, true);
                     }
@@ -196,6 +204,7 @@ public class OrderActivity extends AppCompatActivity {
                         super.onFailure(call, t);
                         binding.progressIndicator.setVisibility(View.GONE);
                         t.printStackTrace();
+                        binding.orderBtn.setText(getString(R.string.order));
                         ViewExtensionsKt.showSnackBar(binding.layout, getString(R.string.connectionError), true);
                         binding.progressIndicator.setVisibility(View.GONE);
                     }

@@ -30,10 +30,6 @@ import retrofit2.Call
 class LoginActivity : AppCompatActivity(){
     lateinit var binding: ActivityLoginBinding
 
-
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= DataBindingUtil.setContentView(this, R.layout.activity_login)
@@ -48,7 +44,7 @@ class LoginActivity : AppCompatActivity(){
 
         Glide
             .with(this)
-            .load(R.drawable.ic_launcher)
+            .load(R.drawable.logo_with_name)
             .into(binding.logoImageView)
 
         animateAlpha()
@@ -56,15 +52,8 @@ class LoginActivity : AppCompatActivity(){
             RegisterActivity.newInstance(this)
             SharedPrefHelper.getInstance().isRegister=true
         }
-
-
-
     }
-
-
-
     companion object Factory{
-
         fun newInstance(context: Context){
             context.startActivity(Intent(context, LoginActivity::class.java))
         }

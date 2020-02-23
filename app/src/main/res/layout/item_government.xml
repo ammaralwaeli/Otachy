@@ -8,6 +8,8 @@
     </data>
     <LinearLayout
         android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
         android:layout_height="wrap_content">
 
         <TextView
@@ -22,10 +24,16 @@
             android:gravity="center"
             android:fontFamily="@font/bahij_the_sans_arabic_bold"
             android:textSize="18sp"
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
             android:background="@drawable/bg_gov_item"
             android:text="@{gov}"
             tools:text="بغداد"
             />
+        <View
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@color/dialogView"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
     </LinearLayout>
 </layout>

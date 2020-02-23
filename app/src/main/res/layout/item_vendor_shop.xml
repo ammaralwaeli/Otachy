@@ -8,9 +8,11 @@
             name="vendorShopModel"
             type="com.srit.otachy.database.models.VendorShopModel" />
     </data>
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
     <LinearLayout
-        android:elevation="@dimen/item_elevation"
         android:id="@+id/item_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_height"
@@ -52,4 +54,11 @@
             tools:ignore="RtlSymmetry" />
 
     </LinearLayout>
+    <View
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@color/dialogView"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+</LinearLayout>
 </layout>
