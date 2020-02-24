@@ -122,7 +122,7 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        startSmsUserConsent();
+        //startSmsUserConsent();
     }
 
 
@@ -290,7 +290,7 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onSuccess(JsonObject result) {
                         showVerifyLayout();
                         SharedPrefHelper.getInstance().setIsVerification(true);
-                        startSmsUserConsent();
+                        //startSmsUserConsent();
                         RegisterActivity.this.phone=binding.phoneNumber.getText().toString();
                         RegisterActivity.this.password=binding.pass.getText().toString();
                         verificate = true;
