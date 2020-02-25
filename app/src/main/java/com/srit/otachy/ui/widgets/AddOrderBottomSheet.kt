@@ -77,7 +77,7 @@ class OrderBottomSheet : BottomSheetDialogFragment() {
     private fun insertItem(it: View) {
         val shoppingCartRepository = ShoppingCartRepository(it.context)
         val vendorShopRepository = VendorShopRepository(it.context)
-
+        reCalculateTotalPrice()
         val category = CategotyModel.getInstance()
         val service = ServiceModel.getInstance()
         val vendor = VendorModel.getInstance()
