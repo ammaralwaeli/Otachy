@@ -151,7 +151,9 @@ public class OrderActivity extends AppCompatActivity {
     }
 
     public void order(View view) {
-
+        if (VendorShopModel.instance.getHomeRecieve()==0){
+            sendDate=LocalDateTime.now();
+        }
         if(sendDate.isAfter(reciveDate)){
             ViewExtensionsKt.showSnackBar(binding.layout,getString(R.string.after_date),true);
             return;
@@ -159,6 +161,7 @@ public class OrderActivity extends AppCompatActivity {
         binding.progressIndicator.setVisibility(View.VISIBLE);
         binding.orderBtn.setText("");
         OrderModel orderModel = OrderModel.getInstance();
+
         orderModel.setDeleverDate(reciveDate);
         orderModel.setReceiveDate(sendDate);
         orderModel.setDescrition(binding.orderDescriptionEditText.getText().toString());
